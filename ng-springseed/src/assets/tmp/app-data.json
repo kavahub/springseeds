@@ -1,0 +1,28 @@
+{
+  "app": {
+    "name": "Alain",
+    "description": "Ng-zorro admin panel front-end framework"
+  },
+  "user": {
+    "name": "Admin",
+    "avatar": "./assets/tmp/img/avatar.jpg",
+    "email": "1290308475@qq.com"
+  },
+  "menu": [
+    {
+      "text": "功能",
+      "group": true,
+      "hideInBreadcrumb": true,
+      "children": [
+        {
+          "text": "概览",
+          "link": "/dashboard"
+        },
+        {
+          "text": "oauth2",
+          "link": "/style/gridmasonry"
+        }
+      ]
+    }
+  ]
+}

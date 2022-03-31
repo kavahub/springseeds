@@ -1,0 +1,45 @@
+server:
+  port: 9000  
+
+spring:
+  application:
+    name: springseed-oauth2
+  messages:
+    basename: i18n/messages
+    encoding: UTF-8
+  # JPA配置
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+    format-sql: true
+    open-in-view: false
+    generate-ddl: true
+    hibernate:
+       ddl-auto: create
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/springseeds?characterEncoding=utf-8&useSSL=true
+    username: springseeds
+    password: springseeds        
+  # 缓存设置  
+  cache:
+    type: redis
+  redis:
+   port: 6379
+   host: 127.0.0.1
+  data:
+    redis.repositories.enabled: false
+
+# 日志配置
+logging:
+  level:
+    ROOT: INFO
+    "[org.hibernate.SQL]": DEBUG
+    "[org.springframework.security]": DEBUG
+    "[org.springframework.jdbc]": DEBUG
+    "[org.springframework.cache]": TRACE
+
+springbootseeds:
+  oauth2:
+    # 令牌存储策略：jwt, jdbc。默认jwt
+    tokenstore: jwt
+    
