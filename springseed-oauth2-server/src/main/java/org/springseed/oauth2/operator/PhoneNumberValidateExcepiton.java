@@ -1,6 +1,6 @@
 package org.springseed.oauth2.operator;
 
-import org.springseed.core.util.CommonRuntimeException;
+import org.springseed.oauth2.util.CommonRuntimeException;
 
 /**
  * 

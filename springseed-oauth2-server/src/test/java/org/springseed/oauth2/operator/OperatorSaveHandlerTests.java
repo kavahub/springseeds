@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springseed.core.util.CommonRuntimeException;
+import org.springseed.oauth2.util.CommonRuntimeException;
 
 @SpringBootTest
 public class OperatorSaveHandlerTests {

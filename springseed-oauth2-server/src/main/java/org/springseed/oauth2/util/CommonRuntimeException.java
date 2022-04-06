@@ -1,13 +1,12 @@
-package org.springseed.core.util;
+package org.springseed.oauth2.util;
 
 /**
- * 
- * 通用异常，所有业务异常需继承此类
- *
+ * TODO
+ *  
  * @author PinWei Wan
  * @since 1.0.0
  */
-public class CommonRuntimeException extends RuntimeException{
+public class CommonRuntimeException extends RuntimeException {
 
     public CommonRuntimeException() {
     }

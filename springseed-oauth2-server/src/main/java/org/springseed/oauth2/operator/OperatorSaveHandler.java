@@ -1,9 +1,9 @@
 package org.springseed.oauth2.operator;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import cn.hutool.core.lang.Validator;
-import cn.hutool.core.util.StrUtil;
 
 /**
  * 
@@ -22,12 +22,12 @@ public class OperatorSaveHandler {
 
     public Operator save(final Operator needToSave) {
         final String phoneNumber = needToSave.getPhoneNumber();
-        if (StrUtil.isNotBlank(phoneNumber) && !Validator.isMobile(phoneNumber)) {
+        if (StringUtils.hasText(phoneNumber) && !Validator.isMobile(phoneNumber)) {
             throw new PhoneNumberValidateExcepiton(phoneNumber);
         }
 
         final String email = needToSave.getEmail();
-        if (StrUtil.isNotBlank(email) && !Validator.isEmail(email)) {
+        if (StringUtils.hasText(email) && !Validator.isEmail(email)) {
             throw new EmailValidateExcepiton(email);
         }
 

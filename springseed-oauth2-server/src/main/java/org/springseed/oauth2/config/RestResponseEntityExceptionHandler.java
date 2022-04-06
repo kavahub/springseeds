@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import org.springseed.core.util.CommonRuntimeException;
 import org.springseed.oauth2.operator.EmailValidateExcepiton;
 import org.springseed.oauth2.operator.OperatorNotFoundExcepiton;
 import org.springseed.oauth2.operator.PhoneNumberValidateExcepiton;
+import org.springseed.oauth2.util.CommonRuntimeException;
 import org.springseed.oauth2.util.ErrorResponse;
 
 

@@ -5,6 +5,15 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "java",
+            "name": "KeycloakEmbedApplication",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "org.springseed.keycloak.KeycloakEmbedApplication",
+            "projectName": "springseed-keycloak-embed-server"
+        },
+        {
             "name": "ng-springseed",
             "request": "launch",
             "type": "pwa-msedge",
