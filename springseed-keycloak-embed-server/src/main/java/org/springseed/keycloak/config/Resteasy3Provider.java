@@ -5,7 +5,7 @@ import org.jboss.resteasy.spi.ResteasyProviderFactory;
 import org.keycloak.common.util.ResteasyProvider;
 
 /**
- * TODO
+ * 继承{@link ResteasyProvider}
  *  
  * @author PinWei Wan
  * @since 1.0.0

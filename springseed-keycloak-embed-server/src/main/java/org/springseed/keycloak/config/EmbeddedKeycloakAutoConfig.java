@@ -4,7 +4,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Configuration;
 
 /**
- * TODO
+ * 自动配置
  *  
  * @author PinWei Wan
  * @since 1.0.0

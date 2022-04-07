@@ -14,7 +14,7 @@ import org.springframework.core.io.Resource;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * TODO
+ * 加载默认属性监听器
  *  
  * @author PinWei Wan
  * @since 1.0.0

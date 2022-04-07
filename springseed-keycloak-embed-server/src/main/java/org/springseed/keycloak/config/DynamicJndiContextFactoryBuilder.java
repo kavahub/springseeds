@@ -17,8 +17,8 @@ import org.springframework.beans.BeanUtils;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * TODO
- *  
+ * JNDI上下文
+ * 
  * @author PinWei Wan
  * @since 1.0.0
  */
@@ -33,11 +33,14 @@ public class DynamicJndiContextFactoryBuilder implements InitialContextFactoryBu
 
     private final InitialContext fixedInitialContext;
 
-    public DynamicJndiContextFactoryBuilder(DataSource dataSource, DefaultCacheManager cacheManager, ExecutorService executorService) {
-        fixedInitialContext = createFixedInitialContext(dataSource, cacheManager, executorService);
+    public DynamicJndiContextFactoryBuilder(DataSource dataSource, DefaultCacheManager cacheManager,
+            ExecutorService executorService) {
+        fixedInitialContext = createFixedInitialContext(dataSource, cacheManager,
+                executorService);
     }
 
-    protected InitialContext createFixedInitialContext(DataSource dataSource, DefaultCacheManager cacheManager, ExecutorService executorService) {
+    protected InitialContext createFixedInitialContext(DataSource dataSource, DefaultCacheManager cacheManager,
+            ExecutorService executorService) {
 
         Hashtable<Object, Object> jndiEnv = new Hashtable<>();
         jndiEnv.put(JNDI_SPRING_DATASOURCE, dataSource);
@@ -60,13 +63,17 @@ public class DynamicJndiContextFactoryBuilder implements InitialContextFactoryBu
         }
     }
 
-
     /**
-     * Create a new {@link InitialContextFactory} based on the given {@code environment}.
+     * Create a new {@link InitialContextFactory} based on the given
+     * {@code environment}.
      * <p>
-     * If the lookup environment is empty, we return a JndiContextFactory that returns a InitialContext which supports a lookups against a fixed set of Spring beans.
-     * If the environment is not empty, we try to use the provided java.naming.factory.initial classname to create a JndiContextFactory and
-     * delegate further lookups to this instance. Otherwise we simply return {@literal null}.
+     * If the lookup environment is empty, we return a JndiContextFactory that
+     * returns a InitialContext which supports a lookups against a fixed set of
+     * Spring beans.
+     * If the environment is not empty, we try to use the provided
+     * java.naming.factory.initial classname to create a JndiContextFactory and
+     * delegate further lookups to this instance. Otherwise we simply return
+     * {@literal null}.
      *
      * @param environment
      * @return
@@ -85,11 +92,11 @@ public class DynamicJndiContextFactoryBuilder implements InitialContextFactoryBu
                 Class<?> factoryClass = Thread.currentThread().getContextClassLoader().loadClass(factoryClassName);
                 return BeanUtils.instantiateClass(factoryClass, InitialContextFactory.class);
             } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+                log.error("Load Class Exception", e);
             }
         }
 
         return null;
     }
-    
+
 }

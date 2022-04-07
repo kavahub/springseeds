@@ -12,7 +12,7 @@ import org.keycloak.common.ClientConnection;
 import org.keycloak.services.filters.AbstractRequestFilter;
 
 /**
- * TODO
+ * 请求过滤器
  *  
  * @author PinWei Wan
  * @since 1.0.0

@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * TODO
+ * 属性
  *  
  * @author PinWei Wan
  * @since 1.0.0

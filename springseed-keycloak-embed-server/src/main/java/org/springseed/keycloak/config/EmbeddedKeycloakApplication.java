@@ -19,7 +19,7 @@ import org.springseed.keycloak.config.KeycloakCustomProperties.AdminUser;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * TODO
+ * 继承{@link KeycloakApplication}，实现创建用户和导入realm功能
  *  
  * @author PinWei Wan
  * @since 1.0.0
@@ -88,10 +88,13 @@ public class EmbeddedKeycloakApplication  extends KeycloakApplication {
     protected void tryImportRealm() {
 
         KeycloakCustomProperties.Migration imex = customProperties.getMigration();
-        Resource importLocation = imex.getImportLocation();
+        if (!imex.isImportEnabled()) {
+            return;
+        }
 
+        Resource importLocation = imex.getImportLocation();
         if (!importLocation.exists()) {
-            log.info("Could not find keycloak import file {}", importLocation);
+            log.error("Could not find keycloak import file {}", importLocation);
             return;
         }
 

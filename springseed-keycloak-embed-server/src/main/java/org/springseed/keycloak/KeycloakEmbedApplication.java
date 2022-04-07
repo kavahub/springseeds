@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration;
 
 /**
- * TODO
+ * 程序入口
  *  
  * @author PinWei Wan
  * @since 1.0.0

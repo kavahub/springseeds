@@ -30,7 +30,7 @@ import org.springframework.core.io.Resource;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * TODO
+ * 配置器
  * 
  * @author PinWei Wan
  * @since 1.0.0
@@ -93,6 +93,7 @@ public class EmbeddedKeycloakConfig {
 
         initKeycloakEnvironmentFromProfiles();
 
+        EmbeddedKeycloakApplication.customProperties = customProperties;
         ServletRegistrationBean<HttpServlet30Dispatcher> servlet = new ServletRegistrationBean<>(new HttpServlet30Dispatcher());
         servlet.addInitParameter("javax.ws.rs.Application", EmbeddedKeycloakApplication.class.getName());
 
@@ -112,6 +113,9 @@ public class EmbeddedKeycloakConfig {
         return servlet;
     }
 
+    /**
+     * 加载profile文件
+     */
     private void initKeycloakEnvironmentFromProfiles() {
         final Resource profileResource = new ClassPathResource("keycloak-profile.properties");
         if (!profileResource.exists()) {
@@ -140,6 +144,13 @@ public class EmbeddedKeycloakConfig {
         }
     }
 
+    /**
+     * 启动成功后显示日志
+     * 
+     * @param serverProperties
+     * @param keycloakCustomProperties
+     * @return
+     */
     @Bean
     ApplicationListener<ApplicationReadyEvent> onApplicationReadyEventListener(ServerProperties serverProperties,
             KeycloakCustomProperties keycloakCustomProperties) {

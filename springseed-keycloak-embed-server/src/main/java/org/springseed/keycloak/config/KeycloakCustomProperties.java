@@ -7,7 +7,7 @@ import org.springframework.core.io.Resource;
 import lombok.Data;
 
 /**
- * TODO
+ * 属性
  *  
  * @author PinWei Wan
  * @since 1.0.0
@@ -16,13 +16,13 @@ import lombok.Data;
 @ConfigurationProperties(prefix = "keycloak.custom")
 public class KeycloakCustomProperties {
   
-    Server server = new Server();
+    private Server server = new Server();
 
-    AdminUser adminUser = new AdminUser();
+    private AdminUser adminUser = new AdminUser();
 
-    Migration migration = new Migration();
+    private Migration migration = new Migration();
 
-    Infinispan infinispan = new Infinispan();
+    private Infinispan infinispan = new Infinispan();
 
     @Data
     public static class Server {
@@ -30,30 +30,31 @@ public class KeycloakCustomProperties {
         /**
          * Path relative to {@code server.servlet.context-path} for the Keycloak JAX-RS Application to listen to.
          */
-        String contextPath = "/auth";
+        private String contextPath = "/auth";
     }
 
     @Data
     public static class Migration {
+        private Resource importLocation = new ClassPathResource("keycloak-realm-config.json");
 
-        Resource importLocation = new ClassPathResource("keycloak-realm-config.json");
+        private String importProvider = "singleFile";
 
-        String importProvider = "singleFile";
+        private boolean importEnabled = false;
     }
 
     @Data
     public static class Infinispan {
 
-        Resource configLocation = new ClassPathResource("infinispan.xml");
+        private Resource configLocation = new ClassPathResource("infinispan.xml");
     }
 
     @Data
     public static class AdminUser {
 
-        boolean createAdminUserEnabled = true;
+        private boolean createAdminUserEnabled = true;
 
-        String username = "admin";
+        private String username = "admin";
 
-        String password;
+        private String password;
     }  
 }

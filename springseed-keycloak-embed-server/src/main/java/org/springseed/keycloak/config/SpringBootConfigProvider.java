@@ -10,7 +10,7 @@ import org.keycloak.Config;
 import lombok.RequiredArgsConstructor;
 
 /**
- * TODO
+ * 继承{@link Config.ConfigProvider}
  *  
  * @author PinWei Wan
  * @since 1.0.0
@@ -94,7 +94,7 @@ public class SpringBootConfigProvider implements Config.ConfigProvider {
                 return null;
             }
 
-            // TODO find better way to parse config yaml into a list instead of a LinkedHashMap in the first place
+            // find better way to parse config yaml into a list instead of a LinkedHashMap in the first place
             if (obj instanceof LinkedHashMap) {
                 LinkedHashMap<?,?> lm = (LinkedHashMap<?, ?>) obj;
                 String[] strings = new String[lm.size()];

@@ -37,7 +37,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * TODO
+ * JS脚本注册
  *  
  * @author PinWei Wan
  * @since 1.0.0

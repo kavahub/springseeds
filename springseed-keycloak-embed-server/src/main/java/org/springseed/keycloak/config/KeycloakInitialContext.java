@@ -10,7 +10,7 @@ import javax.naming.NameParser;
 import javax.naming.NamingException;
 
 /**
- * TODO
+ * 继承{@link InitialContext}, 初始化上下文
  *  
  * @author PinWei Wan
  * @since 1.0.0

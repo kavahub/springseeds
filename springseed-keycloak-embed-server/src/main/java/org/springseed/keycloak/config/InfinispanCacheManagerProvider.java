@@ -8,7 +8,7 @@ import org.keycloak.cluster.ManagedCacheManagerProvider;
 import org.springframework.jndi.JndiTemplate;
 
 /**
- * TODO
+ * 缓存管理器提供者
  *  
  * @author PinWei Wan
  * @since 1.0.0

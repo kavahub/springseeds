@@ -60,6 +60,7 @@ keycloak:
     provider: "default"
     default:
       dataSource: "spring/datasource"
+      jta: false
       initializeEmpty: true
       migrationStrategy: "update"
       showSql: false

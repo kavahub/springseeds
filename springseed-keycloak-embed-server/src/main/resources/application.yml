@@ -15,25 +15,26 @@ spring:
 logging:
   level:
     ROOT: INFO
-    "[org.springframework.security]": DEBUG
-    "[org.springframework.cache]": TRACE
-    "[org.keycloak.services]": TRACE
+    # "[org.springframework.security]": DEBUG
+    # "[org.springframework.cache]": TRACE
+    # "[org.keycloak]": TRACE
 
 keycloak:
-#  custom:
-#    server:
-#      keycloak-path: "/auth"
-#
-#    adminUser:
-#      username: admin
-#      password: admin
-#      create-admin-user-enabled: true
-#
-#    migration:
-#      importProvider: singleFile
-#      importLocation: keycloak-realm-config.json
-       # -Dkeycloak.migration.strategy=OVERWRITE_EXISTING
-       # -Dkeycloak.migration.strategy=IGNORE_EXISTING
+  custom:
+    adminUser:
+      username: admin
+      password: admin
+      create-admin-user-enabled: true
+
+    # migration:
+    #   import-enabled: true
+    #   import-location: classpath:springseeds-realm.json
+
+  connectionsJpa:
+    default:
+     showSql: true
+
+
 #  hostname:
 #    provider: "default"
 #    default:
