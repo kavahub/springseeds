@@ -4,7 +4,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
- * TODO
+ * https://github.com/nurkiewicz/typeof
  *  
  * @author PinWei Wan
  * @since 1.0.0

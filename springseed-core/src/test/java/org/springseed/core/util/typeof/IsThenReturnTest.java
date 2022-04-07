@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import static org.springseed.core.util.typeof.TypeOf.whenTypeOf;
 
 /**
- * TODO
+ * https://github.com/nurkiewicz/typeof
  *  
  * @author PinWei Wan
  * @since 1.0.0

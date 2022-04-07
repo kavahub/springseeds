@@ -3,7 +3,7 @@ package org.springseed.core.util.typeof;
 import java.util.function.Consumer;
 
 /**
- * TODO
+ * https://github.com/nurkiewicz/typeof
  *  
  * @author PinWei Wan
  * @since 1.0.0

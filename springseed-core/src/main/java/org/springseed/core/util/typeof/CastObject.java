@@ -1,12 +1,12 @@
 package org.springseed.core.util.typeof;
 
 /**
- * TODO
+ * 抽象类
  *  
  * @author PinWei Wan
  * @since 1.0.0
  */
-public class CastObject<S, T> {
+public abstract class CastObject<S, T> {
     protected final S object;
     protected final Class<T> expectedType;
 
