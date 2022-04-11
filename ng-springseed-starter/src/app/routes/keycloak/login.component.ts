@@ -8,12 +8,12 @@ import { KeycloakProfile } from "keycloak-js";
     styleUrls: ['./login.component.less']
 })
 export class KeycloakLoginComponent {
-    public isLoggedIn = false;
-    public userProfile: KeycloakProfile | null = null;
+    isLoggedIn = false;
+    userProfile: KeycloakProfile | null = null;
 
     constructor(private readonly keycloak: KeycloakService) { }
 
-    public async ngOnInit() {
+    async ngOnInit() {
         this.isLoggedIn = await this.keycloak.isLoggedIn();
 
         if (this.isLoggedIn) {
@@ -21,11 +21,11 @@ export class KeycloakLoginComponent {
         }
     }
 
-    public login() {
+    login(): void{
         this.keycloak.login();
     }
 
-    public logout() {
+    logout(): void{
         this.keycloak.logout();
     }
 }

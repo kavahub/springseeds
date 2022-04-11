@@ -23,13 +23,6 @@
             "projectName": "springseed-keycloak-embed-server"
         },
         {
-            "name": "ng-springseed-starter",
-            "request": "launch",
-            "type": "pwa-msedge",
-            "url": "http://localhost:4200",
-            "webRoot": "${workspaceFolder}"
-        },
-        {
             "type": "java",
             "name": "OAuth2Application",
             "request": "launch",
