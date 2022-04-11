@@ -6,6 +6,15 @@
     "configurations": [
         {
             "type": "java",
+            "name": "ResourceApplication",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "org.springseed.resource.ResourceApplication",
+            "projectName": "springseed-resource-server"
+        },
+        {
+            "type": "java",
             "name": "KeycloakEmbedApplication",
             "request": "launch",
             "cwd": "${workspaceFolder}",
@@ -14,7 +23,7 @@
             "projectName": "springseed-keycloak-embed-server"
         },
         {
-            "name": "ng-springseed",
+            "name": "ng-springseed-starter",
             "request": "launch",
             "type": "pwa-msedge",
             "url": "http://localhost:4200",
