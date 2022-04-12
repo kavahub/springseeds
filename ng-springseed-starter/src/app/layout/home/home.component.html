@@ -1,7 +1,11 @@
-<nz-card nzTitle="SPRINGSEEDS" nzBorderless="true" [nzExtra]="extraTemplate">
+<nz-card nzTitle="SPRINGSEEDS - {{userName}}" [nzBordered]="false" [nzExtra]="extraTemplate">
+  <div class="container">
     <router-outlet></router-outlet>
+  </div>
 </nz-card>
 <ng-template #extraTemplate>
-  <button nz-button nzType="primary" (click)="home()">首页</button>
+    <button nz-button nzType="primary" (click)="home()">
+      <i nz-icon nzType="home"></i>
+      首页
+    </button>
 </ng-template>
-  

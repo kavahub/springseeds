@@ -1,0 +1,28 @@
+
+<div>
+  <h3>Keycloak登录用户信息</h3>
+
+  <nz-alert nzBanner nzType="error" nzMessage="未登录" *ngIf="!userProfile"></nz-alert>
+
+  <div *ngIf="userProfile">
+    <br />
+    <nz-descriptions nzTitle="用户信息" nzBordered>
+      <nz-descriptions-item nzTitle="ID">{{ userProfile.id }}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="用户名">{{ userProfile.username }}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="姓">{{ userProfile.firstName }}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="名">{{ userProfile.lastName }}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="邮箱">{{ userProfile.email }}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="是否邮箱校验">
+        <nz-switch [ngModel]="userProfile.emailVerified" nzCheckedChildren="是" nzUnCheckedChildren="否" nzDisabled>
+        </nz-switch>
+      </nz-descriptions-item>
+    </nz-descriptions>
+
+    <br />
+    <nz-descriptions nzTitle="用户JSON信息" nzBordered>
+      <nz-descriptions-item nzTitle="JSON">
+        <pre> {{userProfile | json}} </pre>
+      </nz-descriptions-item>
+    </nz-descriptions>
+  </div>
+</div>

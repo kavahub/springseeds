@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LayoutHomeComponent } from '@layout';
 
 import { KeycloakLoginComponent } from './login.component';
+import { KeycloakUserInfoComponent } from './user-info.component';
 
 const routes: Routes = [
   {
@@ -10,7 +11,9 @@ const routes: Routes = [
     component: LayoutHomeComponent,
     children: [
       { path: '', redirectTo: 'login', pathMatch: 'full' },
-      { path: 'login', component: KeycloakLoginComponent }
+      { path: 'login', component: KeycloakLoginComponent },
+      { path: 'user-info', component: KeycloakUserInfoComponent }
+      
     ]
   },
 ];

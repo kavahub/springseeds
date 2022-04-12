@@ -10,6 +10,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { KeycloakService, KeycloakAngularModule } from 'keycloak-angular';
+
+import { environment } from '@env/environment';
 import { CoreModule } from './core/core.module';
 import { GlobalConfigModule } from './global-config.module';
 import { LayoutModule } from './layout/layout.module';
@@ -34,31 +36,21 @@ const LANG_PROVIDES = [
   { provide: NZ_DATE_LOCALE, useValue: LANG.date },
 ];
 
-// 初始化
-function initializeKeycloak(keycloak: KeycloakService) {
-  return () =>
-    keycloak.init({
-      config: {
-        url: 'http://localhost:9000/auth',
-        realm: 'springseeds',
-        clientId: 'ng-springseed-starter'
-      },
-      initOptions: {
-        onLoad: 'check-sso',
-        silentCheckSsoRedirectUri:
-          window.location.origin + '/assets/silent-check-sso.html'
-      }
-    });
-}
-
-
+// 应用初始化
 const APPINIT_PROVIDES = [
   {
     provide: APP_INITIALIZER,
-    useFactory: initializeKeycloak,
+    useFactory: environment.initializeKeycloak,
     multi: true,
     deps: [KeycloakService]
   }
+];
+
+// http 中断器
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { DefaultInterceptor } from '@core';
+const INTERCEPTOR_PROVIDES = [
+  { provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi: true}
 ];
 
 @NgModule({
@@ -82,6 +74,7 @@ const APPINIT_PROVIDES = [
   ],
   providers: [
     ...LANG_PROVIDES,
+    ...INTERCEPTOR_PROVIDES,
     ...APPINIT_PROVIDES
   ],
   bootstrap: [AppComponent]

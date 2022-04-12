@@ -1,1 +1,7 @@
-Home
+<div class="container">
+    <nz-list [nzBordered]="false" nzHeader="Keycloak使用">
+        <nz-list-item *ngFor="let item of keycloakList">
+            <span><a (click)="goto(item.router)">{{item.title}}</a></span>
+        </nz-list-item>
+    </nz-list>
+</div>
