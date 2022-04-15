@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * TODO
+ * bean配置
  *  
  * @author PinWei Wan
  * @since 1.0.0

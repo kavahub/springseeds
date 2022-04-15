@@ -10,7 +10,7 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 
 /**
- * TODO
+ * 资源服务配置
  *  
  * @author PinWei Wan
  * @since 1.0.0

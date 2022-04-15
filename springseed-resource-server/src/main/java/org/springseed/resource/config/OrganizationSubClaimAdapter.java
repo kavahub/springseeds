@@ -7,7 +7,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.oauth2.jwt.MappedJwtClaimSetConverter;
 
 /**
- * TODO
+ * 组织信息转换适配器
  *  
  * @author PinWei Wan
  * @since 1.0.0

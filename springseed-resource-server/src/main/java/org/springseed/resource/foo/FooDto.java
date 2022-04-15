@@ -3,7 +3,7 @@ package org.springseed.resource.foo;
 import lombok.Getter;
 
 /**
- * TODO
+ * 数据传输对象
  *  
  * @author PinWei Wan
  * @since 1.0.0

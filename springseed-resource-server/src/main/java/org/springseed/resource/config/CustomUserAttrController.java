@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * TODO
+ * 获取用户其他属性信息
  *  
  * @author PinWei Wan
  * @since 1.0.0

@@ -3,7 +3,7 @@ package org.springseed.resource.foo;
 import org.springseed.resource.util.CommonRuntimeException;
 
 /**
- * TODO
+ * 异常
  *  
  * @author PinWei Wan
  * @since 1.0.0
