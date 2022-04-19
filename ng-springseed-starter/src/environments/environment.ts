@@ -20,7 +20,7 @@ export const environment = {
         clientId: 'ng-springseed-starter'
       },
       initOptions: {
-        onLoad: 'check-sso',
+        // onLoad: 'check-sso',
         silentCheckSsoRedirectUri:
           window.location.origin + '/assets/silent-check-sso.html'
       }
