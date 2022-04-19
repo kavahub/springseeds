@@ -15,6 +15,7 @@ spring:
 logging:
   level:
     ROOT: INFO
+    "[org.springseed]": DEBUG
     # "[org.springframework.security]": DEBUG
     # "[org.springframework.cache]": TRACE
     # "[org.keycloak]": TRACE
