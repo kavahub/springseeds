@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 1.0.0
  */
 @RestController
-@RequestMapping("/api/v1/foo")
+@RequestMapping("/v1/foo")
 public class FooController {
     private final FooRepository fooRepository;
     private final FooQueryService fooQueryService;

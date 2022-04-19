@@ -1,5 +1,6 @@
 package org.springseed.resource.foo;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
@@ -18,6 +19,7 @@ import lombok.Data;
 @Data
 public class Foo{
     @Id
+    @Column(length = 32)
     private String id;
 
     private String name;
