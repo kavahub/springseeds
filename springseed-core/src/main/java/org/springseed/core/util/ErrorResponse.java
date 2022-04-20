@@ -13,6 +13,7 @@ import lombok.Data;
 public class ErrorResponse {
     private String message;
     private String error;
+    private String trace;
 
     public ErrorResponse(final String message) {
         super();
@@ -20,8 +21,14 @@ public class ErrorResponse {
     }
 
     public ErrorResponse(final String message, final String error) {
-        super();
-        this.message = message;
+        this(message);
         this.error = error;
     }
+
+    public ErrorResponse(String message, String error, String trace) {
+        this(message, error);
+        this.trace = trace;
+    }
+
+    
 }
