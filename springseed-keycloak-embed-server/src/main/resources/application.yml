@@ -7,9 +7,9 @@ spring:
   jpa:
     open-in-view: false
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/keycloak?characterEncoding=UTF-8&useSSL=true
-    username: springseeds
-    password: springseeds        
+    url: jdbc:mysql://127.0.0.1:3306/keycloak-embed?characterEncoding=UTF-8&useSSL=true
+    username: root
+    password: root        
 
 # 日志配置
 logging:
@@ -21,15 +21,15 @@ logging:
     # "[org.keycloak]": TRACE
 
 keycloak:
-  custom:
-    adminUser:
-      username: admin
-      password: admin
-      create-admin-user-enabled: true
+  # custom:
+  #   adminUser:
+  #     username: admin
+  #     password: admin
+  #     create-admin-user-enabled: true
 
-    # migration:
-    #   import-enabled: true
-    #   import-location: classpath:springseeds-realm.json
+  #   migration:
+  #     import-enabled: true
+  #     import-location: classpath:springseeds-realm.json
 
   connectionsJpa:
     default:
