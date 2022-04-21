@@ -6,6 +6,15 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch LocalOSSApplication",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",            
+            "mainClass": "org.springseed.oss.LocalOSSApplication",
+            "projectName": "springseed-oss-local-server"
+        },
+        {
+            "type": "java",
             "name": "ResourceApplication",
             "request": "launch",
             "cwd": "${workspaceFolder}",
