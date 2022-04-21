@@ -160,7 +160,7 @@ public class EmbeddedKeycloakConfig {
             Integer port = serverProperties.getPort();
             String keycloakContextPath = keycloakCustomProperties.getServer().getContextPath();
 
-            log.info("Embedded Keycloak started: http://localhost:{}{}", port, keycloakContextPath);
+            log.info("KeycloakEmbedApplication started: http://localhost:{}{}", port, keycloakContextPath);
         };
     }
     
