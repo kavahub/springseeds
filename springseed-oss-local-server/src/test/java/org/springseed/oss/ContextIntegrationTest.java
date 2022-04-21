@@ -13,6 +13,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
  */
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = { LocalOSSApplication.class })
+@SpringseedActiveProfiles
 public class ContextIntegrationTest {
     @Test
     public void whenLoadApplication_thenSuccess() {

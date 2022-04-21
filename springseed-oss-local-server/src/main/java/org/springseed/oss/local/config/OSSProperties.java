@@ -1,4 +1,4 @@
-package org.springseed.oss.local;
+package org.springseed.oss.local.config;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -9,7 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * TODO
+ * 属性配置
  *  
  * @author PinWei Wan
  * @since 1.0.0
@@ -18,5 +18,5 @@ import lombok.Setter;
 @Setter
 @ConfigurationProperties("springseeds.oss.local")
 public class OSSProperties {
-    private Path uploadRootPath = Paths.get(System.getProperty("user.dir"), ".springseed", "oss");
+    private Path uploadRootPath = Paths.get(System.getProperty("user.home"), ".springseed", "oss");
 }

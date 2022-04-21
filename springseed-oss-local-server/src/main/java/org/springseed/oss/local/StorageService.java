@@ -12,21 +12,23 @@ import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+import org.springseed.oss.local.config.OSSProperties;
+import org.springseed.oss.local.util.FileNotFoundException;
+import org.springseed.oss.local.util.FileReadException;
 import org.springseed.oss.metadata.Metadata;
 import org.springseed.oss.metadata.MetadataQueryService;
 import org.springseed.oss.metadata.MetadataRepository;
-import org.springseed.oss.util.FileNotFoundException;
 import org.springseed.oss.util.OSSRuntimeException;
 import org.springseed.oss.util.OSSUtil;
 import org.springseed.oss.util.SecurityUtils;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -37,12 +39,15 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Service
 @Slf4j
-@RequiredArgsConstructor
 public class StorageService {
+    @Autowired
+    private OSSProperties ossProperties;
+    @Autowired
+    private MetadataRepository metadataRepository;
+    @Autowired
+    private MetadataQueryService metadataQueryService;
+
     private Path uploadRootPath;
-    private final OSSProperties ossProperties;
-    private final MetadataRepository metadataRepository;
-    private final MetadataQueryService metadataQueryService;
 
     @PostConstruct
     public void init() {
@@ -77,28 +82,31 @@ public class StorageService {
             try (InputStream fileData = file.getInputStream()) {
                 final String fileName = StringUtils.cleanPath(file.getOriginalFilename());
                 final long fileSize = file.getSize();
-                final String fileType = OSSUtil.getFileType(fileData, fileName);
-                final String fileChecksumCRC32 = OSSUtil.getFileChecksumCRC32(fileData);
-                final String[] filePath = OSSUtil.getFilePath(fileName);
+                final String fileType = OSSUtil.getFileType(fileName);
+                final String filePath = OSSUtil.getFilePath(fileName);
 
-                final Path destinationPath = this.uploadRootPath.resolve(filePath[0]).resolve(filePath[1]);
-                if (Files.exists(destinationPath)) {
+                final Path destinationPath = this.uploadRootPath.resolve(filePath);
+                if (!Files.exists(destinationPath)) {
                     Files.createDirectories(destinationPath);
                 }
 
                 // 存储文件元数据
-                final Metadata metadata = Metadata.builder().path(Metadata.joinPath(filePath))
-                        .name(fileName).size(fileSize).type(fileType).crc32(fileChecksumCRC32)
-                        .creaateBy(SecurityUtils.getCurrentUserInfo().orElse(null)).build();
+                final Metadata metadata = Metadata.builder().path(filePath)
+                        .name(fileName).size(fileSize).type(fileType)
+                        .createdBy(SecurityUtils.getCurrentUserInfo().orElse(null)).build();
                 metadataRepository.save(metadata);
-                // 存储文件
-                Files.copy(fileData, destinationPath.resolve(metadata.getId()), StandardCopyOption.REPLACE_EXISTING);
 
+                
+                // 存储文件
+                final long size = Files.copy(fileData, destinationPath.resolve(metadata.getId()), StandardCopyOption.REPLACE_EXISTING);
+                if (log.isDebugEnabled()) {
+                    log.debug("File size : {}", size);
+                }
                 return metadata.getId();
             }
 
         } catch (IOException e) {
-            throw new OSSRuntimeException("Failed to store file.", e);
+            throw new OSSRuntimeException("Failed to store file", e);
         }
     }
 
@@ -111,7 +119,7 @@ public class StorageService {
     public Resource loadByMetadataId(final String metadataId) {
         return this.metadataQueryService.findById(metadataId)
                 .map(this::loadByMetadata)
-                .orElseThrow(() -> new FileNotFoundException("Metadata not found: " + metadataId));
+                .get();
     }
 
     /**
@@ -155,24 +163,24 @@ public class StorageService {
      */
     public Resource loadByMetadata(Metadata metadata) {
         if (log.isDebugEnabled()) {
-            log.debug("Begin to read file: {}", metadata.getName());
+            log.debug("Begin to read file: {}", metadata.getId());
         }
 
-        final String[] filePath = metadata.splitPath();
-        final Path fileFullPath = this.uploadRootPath.resolve(filePath[0]).resolve(filePath[1]);
-
+        final Path fileFullPath = this.uploadRootPath.resolve(metadata.getPath()).resolve(metadata.getId());
         try {
             final Resource resource = new UrlResource(fileFullPath.toUri());
 
-            if (resource.exists() || resource.isReadable()) {
-                return resource;
-            } else {
-                throw new FileNotFoundException(
-                        "Could not read file: " + fileFullPath);
-
+            if (!resource.exists()) {
+                throw new FileNotFoundException(fileFullPath.toString());
             }
+            
+            if (!resource.isReadable()) {
+                throw new FileReadException(fileFullPath.toString());
+            } 
+
+            return resource;
         } catch (MalformedURLException e) {
-            throw new FileNotFoundException("Could not read file", e);
+            throw new FileReadException(e);
         }
     }
 
@@ -188,8 +196,7 @@ public class StorageService {
                 log.debug("Begin to remove file: {}", metadata.getName());
             }
 
-            final String[] filePath = metadata.splitPath();
-            final Path fileFullPath = this.uploadRootPath.resolve(filePath[0]).resolve(filePath[1]);
+            final Path fileFullPath = this.uploadRootPath.resolve(metadata.getPath()).resolve(metadata.getId());
 
             // 先删除数据库
             this.metadataRepository.delete(metadata);
@@ -197,10 +204,10 @@ public class StorageService {
             try {
                 Files.deleteIfExists(fileFullPath);
             } catch (IOException ex) {
-                log.error("Deleting file exception, file: {} cause: {}", fileFullPath, ex.getMessage());
+                log.warn("Deleting file exception, file: {} cause: {}", fileFullPath, ex.getMessage());
             }
         }, () -> {
-            log.error("Metadata not found: {}", metadataId);
+            log.warn("Metadata not found: {}", metadataId);
         });
     }
 

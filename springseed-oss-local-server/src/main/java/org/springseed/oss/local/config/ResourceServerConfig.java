@@ -1,4 +1,4 @@
-package org.springseed.oss.local;
+package org.springseed.oss.local.config;
 
 import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
 import org.springframework.context.annotation.Bean;
@@ -10,8 +10,8 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 
 /**
- * TODO
- *  
+ * 资源服务器
+ * 
  * @author PinWei Wan
  * @since 1.0.0
  */
@@ -22,14 +22,15 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.cors()
-        .and()
+		.and()
+		.csrf().disable()
           .authorizeRequests()
             .antMatchers(HttpMethod.GET)
-              .hasAuthority("SCOPE_oss_read")
+              .hasAnyAuthority("ROLE_oss_read", "SCOPE_oss_read")
             .antMatchers(HttpMethod.POST)
-              .hasAuthority("SCOPE_oss_write")
+              .hasAnyAuthority("ROLE_oss_write", "SCOPE_oss_write")
             .antMatchers(HttpMethod.DELETE)
-              .hasAuthority("SCOPE_oss_write")              
+              .hasAnyAuthority("ROLE_oss_delete", "SCOPE_oss_delete")              
             .anyRequest()
               .authenticated()
 		.and()
@@ -37,10 +38,10 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
 				.jwt();
 	}
 	// @formatter:on
-    
+
 	@Bean
 	JwtDecoder jwtDecoder(OAuth2ResourceServerProperties properties) {
 		return NimbusJwtDecoder.withJwkSetUri(properties.getJwt().getJwkSetUri()).build();
 	}
-    
+
 }

@@ -8,6 +8,7 @@ import java.util.zip.ZipOutputStream;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.StreamUtils;
@@ -23,7 +24,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springseed.oss.metadata.Metadata;
 import org.springseed.oss.metadata.MetadataRepository;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -34,11 +34,12 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @RestController
-@RequiredArgsConstructor
-@RequestMapping("/v1/oss")
-public class OSSController {
-	private final StorageService storageService;
-	private final MetadataRepository metadataRepository;
+@RequestMapping("/v1/oss-local")
+public class OSSLocalController {
+	@Autowired
+	private StorageService storageService;
+	@Autowired
+	private MetadataRepository metadataRepository;
 
 	@PostMapping("/upload")
 	@ResponseStatus(HttpStatus.CREATED)
