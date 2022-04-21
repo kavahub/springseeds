@@ -5,15 +5,15 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Index;
 import javax.persistence.PrePersist;
-import javax.persistence.Table;
 
 import org.springseed.core.util.SnowflakeUtil;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * 元数据
@@ -24,15 +24,11 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @Builder
-@Entity(name = "OSS_METADATA")
-@Table(indexes = {
-        @Index(name = "idx_path", columnList = "path")
-})
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity(name = "SSD_METADATA")
 public class Metadata {
-    private final static String PATH_CHAR = ",";
-
     @Id
-    @Column(length = 32)
     @EqualsAndHashCode.Include
     private String id;
 
@@ -53,18 +49,7 @@ public class Metadata {
     private Date createdOn;
 
     /** 创建人 */
-    private String creaateBy;
-
-    /** 校验码 */
-    private String crc32;
-
-    public static String joinPath(final String[] path) {
-        return String.join(PATH_CHAR, path);
-    }
-
-    public String[] splitPath() {
-        return this.path.split(PATH_CHAR);
-    }
+    private String createdBy;
 
     @PrePersist
     public void prePersist() {

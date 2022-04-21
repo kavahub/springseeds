@@ -3,7 +3,7 @@ package org.springseed.oss;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * TODO
+ * 测试
  *  
  * @author PinWei Wan
  * @since 1.0.0

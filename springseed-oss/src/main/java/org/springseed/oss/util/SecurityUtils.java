@@ -12,7 +12,7 @@ import cn.hutool.core.text.StrFormatter;
 import lombok.experimental.UtilityClass;
 
 /**
- * TODO
+ * 安全工具
  * 
  * @author PinWei Wan
  * @since 1.0.0

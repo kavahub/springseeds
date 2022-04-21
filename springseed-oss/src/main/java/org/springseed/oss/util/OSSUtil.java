@@ -1,9 +1,8 @@
 package org.springseed.oss.util;
 
-import java.io.InputStream;
+import java.io.File;
+import java.util.Optional;
 
-import cn.hutool.core.io.FileTypeUtil;
-import cn.hutool.core.io.IoUtil;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -16,12 +15,10 @@ import lombok.experimental.UtilityClass;
 public class OSSUtil {
     private final static int MASK = 255;
 
-    public String getFileChecksumCRC32(final InputStream fileData) {
-        return Long.toHexString(IoUtil.checksumCRC32(fileData));
-    }
-
-    public String getFileType(final InputStream fileData, final String fileName) {
-        return FileTypeUtil.getType(fileData, fileName);
+    public String getFileType(final String fileName) {
+        return Optional.ofNullable(fileName)
+                .filter(f -> f.contains("."))
+                .map(f -> f.substring(fileName.lastIndexOf(".") + 1)).orElse(null);
     }
 
     /**
@@ -30,13 +27,17 @@ public class OSSUtil {
      * @param fileName
      * @return
      */
-    public String[] getFilePath(final String fileName) {
+    public String getFilePath(final String fileName) {
         final int hash = fileName.hashCode();
         final int firstDir = hash & MASK;
         final int secondDir = (hash >> 8) & MASK;
 
-        return new String[] { String.format("%02x", firstDir).toUpperCase(),
-                String.format("%02x", secondDir).toUpperCase() };
+        final String path = new StringBuilder(String.format("%02x", firstDir))
+                .append(File.separator)
+                .append(String.format("%02x", secondDir))
+                .toString();
+
+        return path.toUpperCase();
     }
 
 }

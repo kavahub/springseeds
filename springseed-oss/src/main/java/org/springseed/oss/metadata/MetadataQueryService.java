@@ -2,6 +2,7 @@ package org.springseed.oss.metadata;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,11 +13,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class MetadataQueryService {
-    private final MetadataRepository metadataRepository;
-
-    public MetadataQueryService(MetadataRepository metadataRepository) {
-        this.metadataRepository = metadataRepository;
-    }
+    @Autowired
+    private MetadataRepository metadataRepository;
 
     /**
      * 依据ID查找元数据，如果不存在，抛出 {@link MetadataNotFoundException} 异常

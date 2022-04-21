@@ -10,13 +10,11 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 
 import cn.hutool.core.util.RandomUtil;
 
 /**
- * TODO
+ * 工具测试
  * 
  * @author PinWei Wan
  * @since 1.0.0
@@ -25,11 +23,9 @@ public class OSSUtilTests {
 
     @Test
     public void givenFile_whenGetFileType_thenOk() throws IOException {
-        final Resource file1 = new ClassPathResource("test-file.txt");
-        assertThat(OSSUtil.getFileType(file1.getInputStream(), file1.getFilename())).isEqualTo("txt");
+        assertThat(OSSUtil.getFileType("test-file.txt")).isEqualTo("txt");
 
-        final Resource file2 = new ClassPathResource("test-file2");
-        assertThat(OSSUtil.getFileType(file2.getInputStream(), file2.getFilename())).isEqualTo("jpg");
+        assertThat(OSSUtil.getFileType("test-file")).isNull();
     }
 
     @Test

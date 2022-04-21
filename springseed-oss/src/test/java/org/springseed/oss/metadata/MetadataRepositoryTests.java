@@ -10,7 +10,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 /**
- * TODO
+ * 元数据数据接口测试
  * 
  * @author PinWei Wan
  * @since 1.0.0
@@ -26,16 +26,22 @@ public class MetadataRepositoryTests {
 
     @Test
     public void giveMetadata_whenFind_thenOk() {
-        final Metadata metadata = Metadata.builder().crc32("crc32")
-                .creaateBy("creaateBy").name("name").path("path").size(1).build();
+        final Metadata metadata = Metadata.builder()
+                .createdBy("createdBy")
+                .name("name")
+                .path("path")
+                .type("type")
+                .size(1)
+                .build();
 
         entityManager.persistAndFlush(metadata);
 
         final Metadata found = metadataRepository.findById(metadata.getId()).get();
         assertThat(found.getCreatedOn()).isNotNull();
+        assertThat(found.getCreatedBy()).isEqualTo("createdBy");
+        assertThat(found.getName()).isEqualTo("name");
         assertThat(found.getPath()).isEqualTo("path");
-        assertThat(found.getCreaateBy()).isEqualTo("creaateBy");
-        assertThat(found.getCrc32()).isEqualTo("crc32");
+        assertThat(found.getType()).isEqualTo("type");
         assertThat(found.getSize()).isEqualTo(1);
     }
 }
