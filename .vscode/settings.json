@@ -22,5 +22,6 @@
         "org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*",
         "org.springframework.test.web.servlet.result.MockMvcResultHandlers.*",
         "org.springframework.test.web.servlet.result.MockMvcResultMatchers.*",
+        "org.springframework.util.StringUtils.*"
       ]      
 }
