@@ -26,7 +26,7 @@ public class MetadataQueryServiceTests {
     @Autowired
     private MetadataRepository metadataRepository;
 
-    private Metadata md = Metadata.builder().path("path").build();
+    private Metadata md = Metadata.builder().name("name").path("path").build();
 
     @BeforeEach
     public void setUp() {

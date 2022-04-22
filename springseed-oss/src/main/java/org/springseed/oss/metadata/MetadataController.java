@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 1.0.0
  */
 @RestController
-@RequestMapping("/v1/oss/metadatas")
+@RequestMapping("/v1/metadatas")
 public class MetadataController {
     @Autowired
     private MetadataRepository metadataRepository;

@@ -40,6 +40,7 @@ public class Metadata {
     private String type;
 
     /** 名称 */
+    @Column(nullable = false)
     private String name;
 
     /** 大小，字节 */

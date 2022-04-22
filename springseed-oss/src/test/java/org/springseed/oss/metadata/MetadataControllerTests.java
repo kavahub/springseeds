@@ -40,8 +40,8 @@ public class MetadataControllerTests {
     @Autowired
     private MockMvc mvc;
 
-    private Metadata md1 = Metadata.builder().path("path1").build();
-    private Metadata md2 = Metadata.builder().path("path2").build();
+    private Metadata md1 = Metadata.builder().name("name1").path("path1").build();
+    private Metadata md2 = Metadata.builder().name("name2").path("path2").build();
 
     @BeforeAll
 
@@ -51,7 +51,7 @@ public class MetadataControllerTests {
 
     @Test
     public void givenWrongId_whenGet_thenNotFound() throws Exception {
-        mvc.perform(get("/v1/oss/metadatas/{id}", "wrong_id"))
+        mvc.perform(get("/v1/metadatas/{id}", "wrong_id"))
                 .andDo(print())
                 .andExpect(status().isNotFound());
     }
@@ -62,7 +62,7 @@ public class MetadataControllerTests {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.addAll("ids", ids);
 
-        mvc.perform(get("/v1/oss/metadatas/ids").params(params))
+        mvc.perform(get("/v1/metadatas/ids").params(params))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(equalTo(2))));
