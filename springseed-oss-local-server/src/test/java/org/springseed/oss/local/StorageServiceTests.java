@@ -43,7 +43,7 @@ public class StorageServiceTests {
     @Autowired
     private OSSProperties properties;
 
-    private Metadata md = Metadata.builder().path("path").build();
+    private Metadata md = Metadata.builder().name("name").path("path").build();
 
     @BeforeAll
     public void BeforeAll() {

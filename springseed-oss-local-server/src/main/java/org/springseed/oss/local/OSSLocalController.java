@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springseed.oss.local.util.FileNameCounter;
 import org.springseed.oss.metadata.Metadata;
 import org.springseed.oss.metadata.MetadataRepository;
 
@@ -34,7 +35,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @RestController
-@RequestMapping("/v1/oss-local")
+@RequestMapping("/v1/files")
 public class OSSLocalController {
 	@Autowired
 	private StorageService storageService;
@@ -55,24 +56,26 @@ public class OSSLocalController {
 	@GetMapping(value = "/download/all-in-zip", produces = "application/zip")
 	public void downloadByMetadataIds(@RequestParam(name = "metadataIds") List<String> metadataIds,
 			HttpServletResponse response) throws IOException {
+
+		// 查询元数据
+		final List<Metadata> metadatas = this.metadataRepository.findAllById(metadataIds);				
 		try (ZipOutputStream zipOut = new ZipOutputStream(response.getOutputStream())) {
-			// 查询元数据
-			final List<Metadata> metadatas = this.metadataRepository.findAllById(metadataIds);
-			for(final Metadata metadata : metadatas) {
-				try{
+			final FileNameCounter fileNameCounter = new FileNameCounter();
+			for (final Metadata metadata : metadatas) {
+				try {
 					// 读取文件
 					final Resource file = this.storageService.loadByMetadata(metadata);
-					final ZipEntry zipEntry = new ZipEntry(metadata.getName());
+					// 避免重复的文件名
+					final ZipEntry zipEntry = new ZipEntry(fileNameCounter.count(metadata.getName()));
 					zipEntry.setSize(file.contentLength());
 					zipOut.putNextEntry(zipEntry);
 					StreamUtils.copy(file.getInputStream(), zipOut);
 					zipOut.closeEntry();
-				}
-				catch(FileNotFoundException ex) {
+				} catch (FileNotFoundException ex) {
 					// 单个文件读取失败，不影响其他文件读取
-					log.error(ex.getMessage());
+					log.warn(ex.getMessage());
 				}
-			};
+			}
 			zipOut.finish();
 		}
 

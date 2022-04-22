@@ -1,5 +1,7 @@
 package org.springseed.oss.local;
 
+import static org.springframework.util.StringUtils.hasText;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -20,6 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springseed.oss.local.config.OSSProperties;
+import org.springseed.oss.local.util.FileEmptyException;
+import org.springseed.oss.local.util.FileNameEmptyException;
 import org.springseed.oss.local.util.FileNotFoundException;
 import org.springseed.oss.local.util.FileReadException;
 import org.springseed.oss.metadata.Metadata;
@@ -72,15 +76,20 @@ public class StorageService {
     public String store(MultipartFile file) {
         try {
             if (file.isEmpty()) {
-                throw new OSSRuntimeException("Failed to store empty file.");
+                throw new FileEmptyException();
             }
 
             if (log.isDebugEnabled()) {
                 log.debug("Begin to store file: {}", file.getOriginalFilename());
             }
 
+            final String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+            if (!hasText(fileName)) {
+                throw new FileNameEmptyException();
+            }
+
             try (InputStream fileData = file.getInputStream()) {
-                final String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+                
                 final long fileSize = file.getSize();
                 final String fileType = OSSUtil.getFileType(fileName);
                 final String filePath = OSSUtil.getFilePath(fileName);
