@@ -1,5 +1,5 @@
 server:
-  port: 9001  
+  port: 9020
   servlet.context-path: /oss-local
 
 spring:
@@ -35,5 +35,5 @@ logging:
     ROOT: INFO
     "[org.springseed]": DEBUG    
     "[org.springframework.security]": DEBUG
-    # "[org.springframework.cache]": TRACE
-    # "[org.keycloak]": TRACE
+    "[org.springframework.web]": DEBUG
+

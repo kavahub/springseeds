@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springseed.oss.util.OSSRuntimeException;
 
 /**
- * TODO
+ * 空文件
  *  
  * @author PinWei Wan
  * @since 1.0.0

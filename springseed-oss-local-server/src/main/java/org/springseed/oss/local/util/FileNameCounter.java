@@ -8,7 +8,7 @@ import java.util.Map;
 import cn.hutool.core.text.StrFormatter;
 
 /**
- * TODO
+ * 文件名称计数，相同名称的使用序号
  * 
  * @author PinWei Wan
  * @since 1.0.0
@@ -17,7 +17,7 @@ public class FileNameCounter {
     public final static String UNKNOW_FILE_NAME = "未知文件名";
     private Map<String, Integer> nameCache = new HashMap<>();
 
-    public String count(final String fileName) {
+    public String convert(final String fileName) {
         String tmpFileName = fileName;
         if (!hasText(tmpFileName)) {
             tmpFileName = UNKNOW_FILE_NAME;

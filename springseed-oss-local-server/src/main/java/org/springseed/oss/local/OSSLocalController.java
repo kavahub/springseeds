@@ -66,7 +66,7 @@ public class OSSLocalController {
 					// 读取文件
 					final Resource file = this.storageService.loadByMetadata(metadata);
 					// 避免重复的文件名
-					final ZipEntry zipEntry = new ZipEntry(fileNameCounter.count(metadata.getName()));
+					final ZipEntry zipEntry = new ZipEntry(fileNameCounter.convert(metadata.getName()));
 					zipEntry.setSize(file.contentLength());
 					zipOut.putNextEntry(zipEntry);
 					StreamUtils.copy(file.getInputStream(), zipOut);
