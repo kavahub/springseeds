@@ -14,7 +14,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 
-@SpringBootTest
+@SpringBootTest(classes = { OAuth2Application.class })
 @AutoConfigureMockMvc
 public class OAuth2AuthorizationServerApplicationITests {
     protected static final String CLIENT_ID = "fooClient";
