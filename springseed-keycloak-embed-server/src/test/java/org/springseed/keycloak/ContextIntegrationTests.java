@@ -7,6 +7,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = { KeycloakEmbedApplication.class })
+@SpringseedActiveProfiles
 public class ContextIntegrationTests {
     @Test
     public void whenLoadApplication_thenSuccess() {

@@ -1,0 +1,25 @@
+spring:
+  datasource.url: jdbc:h2:mem:keycloak-embed     
+
+# 日志配置
+logging:
+  level:
+    ROOT: INFO
+    "[org.springseed]": DEBUG
+    # "[org.springframework.security]": DEBUG
+    # "[org.springframework.cache]": TRACE
+    # "[org.keycloak]": TRACE
+
+keycloak:
+  custom:
+    adminUser:
+      username: admin
+      password: admin
+      create-admin-user-enabled: true
+
+    migration:
+      import-enabled: true
+      import-location: classpath:springseeds-realm.json
+
+
+

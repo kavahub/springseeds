@@ -7,7 +7,7 @@
         <groupId>org.springseeds</groupId>
         <artifactId>springseed-parent</artifactId>
         <version>1.0.0</version>
-        <relativePath>../springseed-parent/pom.xml</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>springseed-keycloak-embed-server</artifactId>
@@ -85,6 +85,11 @@
             <scope>test</scope>
         </dependency>
 
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<scope>test</scope>
+		</dependency>
 
         <dependency>
             <groupId>org.assertj</groupId>
