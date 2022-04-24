@@ -33,6 +33,14 @@ public class ActivitiConifg {
         String[][] usersGroupsAndRoles = {
                 {"system", "password", "ROLE_ACTIVITI_USER"},
                 {"admin", "password", "ROLE_ACTIVITI_ADMIN"},
+                {"reviewer", "password", "ROLE_ACTIVITI_USER"},
+                {"bob", "password", "ROLE_ACTIVITI_USER", "GROUP_activitiTeam"},
+                {"john", "password", "ROLE_ACTIVITI_USER", "GROUP_activitiTeam"},
+                {"hannah", "password", "ROLE_ACTIVITI_USER", "GROUP_activitiTeam"},
+                {"salaboy", "password", "ROLE_ACTIVITI_USER", "GROUP_activitiTeam"},
+                {"ryandawsonuk", "password", "ROLE_ACTIVITI_USER", "GROUP_activitiTeam"},
+                {"erdemedeiros", "password", "ROLE_ACTIVITI_USER", "GROUP_activitiTeam"},                
+                {"other", "password", "ROLE_ACTIVITI_USER", "GROUP_otherTeam"},                
         };
 
         for (String[] user : usersGroupsAndRoles) {

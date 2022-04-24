@@ -1,4 +1,5 @@
-package org.springseed.activiti;
+package org.springseed.activiti.process;
+
 
 import java.util.Map;
 
