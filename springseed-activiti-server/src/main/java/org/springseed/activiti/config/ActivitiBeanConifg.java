@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Configuration
 @Slf4j
-public class ActivitiConifg {
+public class ActivitiBeanConifg {
     @Bean
     public UserDetailsService mockUserDetailsService() {
 
