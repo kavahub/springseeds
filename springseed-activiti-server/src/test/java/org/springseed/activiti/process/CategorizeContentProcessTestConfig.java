@@ -6,20 +6,20 @@ import java.util.Map;
 import org.activiti.api.process.runtime.connector.Connector;
 import org.activiti.api.process.runtime.events.ProcessCompletedEvent;
 import org.activiti.api.process.runtime.events.listener.ProcessRuntimeEventListener;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * TODO
+ * 配置
  *  
  * @author PinWei Wan
  * @since 1.0.0
  */
-@Configuration
+@TestConfiguration
 @Slf4j
-public class CategorizeContentProcessConfig {
+public class CategorizeContentProcessTestConfig {
     @Bean
     public Connector processTextConnector() {
         return integrationContext -> {

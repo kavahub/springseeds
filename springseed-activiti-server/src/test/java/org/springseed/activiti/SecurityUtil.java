@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * TODO
+ * 安全工具，模拟登录用户
  *  
  * @author PinWei Wan
  * @since 1.0.0

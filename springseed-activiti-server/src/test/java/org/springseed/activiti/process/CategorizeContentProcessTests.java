@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springseed.activiti.ActivitiApplication;
 import org.springseed.activiti.SecurityUtil;
@@ -20,7 +21,7 @@ import org.springseed.activiti.SpringseedActiveProfiles;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * TODO
+ * 测试
  *  
  * @author PinWei Wan
  * @since 1.0.0
@@ -28,6 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = { ActivitiApplication.class })
 @SpringseedActiveProfiles
+@Import(CategorizeContentProcessTestConfig.class)
 @Slf4j
 public class CategorizeContentProcessTests {
     private static final String PROCESS_DEFINITION_KEY = "categorizeProcess";

@@ -3,20 +3,20 @@ package org.springseed.activiti.task;
 import org.activiti.api.task.runtime.events.TaskAssignedEvent;
 import org.activiti.api.task.runtime.events.TaskCompletedEvent;
 import org.activiti.api.task.runtime.events.listener.TaskRuntimeEventListener;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * TODO
+ * 配置
  *  
  * @author PinWei Wan
  * @since 1.0.0
  */
-@Configuration
+@TestConfiguration
 @Slf4j
-public class TaskExampleConfig {
+public class TaskExampleTestConfig {
     @Bean
     public TaskRuntimeEventListener<TaskAssignedEvent> taskAssignedListener() {
         return taskAssigned -> log.info(">>> Task Assigned: '"
