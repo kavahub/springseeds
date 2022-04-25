@@ -16,7 +16,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@ConfigurationProperties("springseeds.oss.local")
+@ConfigurationProperties("springseed.oss.local")
 public class OSSProperties {
     private Path uploadRootPath = Paths.get(System.getProperty("user.home"), ".springseed", "oss");
 }
