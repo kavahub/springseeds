@@ -1,6 +1,6 @@
 # Default Keycloak configuration, adapted from Keycloak's keycloak-server.json
 
-keycloak:
+springseed.keycloak:
   hostname:
     provider: "default"
     default:

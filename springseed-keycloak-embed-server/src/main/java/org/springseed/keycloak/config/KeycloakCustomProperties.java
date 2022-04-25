@@ -13,7 +13,7 @@ import lombok.Data;
  * @since 1.0.0
  */
 @Data
-@ConfigurationProperties(prefix = "keycloak.custom")
+@ConfigurationProperties(prefix = "springseed.keycloak.custom")
 public class KeycloakCustomProperties {
   
     private Server server = new Server();

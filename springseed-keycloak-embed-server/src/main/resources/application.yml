@@ -20,7 +20,7 @@ logging:
     # "[org.springframework.cache]": TRACE
     # "[org.keycloak]": TRACE
 
-keycloak:
+springseed.keycloak:
   # custom:
   #   adminUser:
   #     username: admin

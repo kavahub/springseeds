@@ -15,7 +15,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@ConfigurationProperties(prefix = "keycloak")
+@ConfigurationProperties(prefix = "springseed.keycloak")
 public class KeycloakProperties extends HashMap<String, Object>  {
     
 }

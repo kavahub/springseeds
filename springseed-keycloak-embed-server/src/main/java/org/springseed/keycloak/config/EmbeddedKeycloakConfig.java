@@ -140,7 +140,7 @@ public class EmbeddedKeycloakConfig {
                 }
             }
         } catch (IOException ioe) {
-            log.warn("Could not read profile.properties.", ioe);
+            log.warn("Could not read keycloak-profile.properties.", ioe);
         }
     }
 
