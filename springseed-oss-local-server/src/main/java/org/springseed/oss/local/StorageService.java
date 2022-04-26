@@ -88,7 +88,7 @@ public class StorageService {
             }
 
             try (InputStream fileData = file.getInputStream()) {
-                
+
                 final long fileSize = file.getSize();
                 final String filePath = OSSUtils.getFilePath(fileName);
 
@@ -100,9 +100,11 @@ public class StorageService {
                 // 存储文件元数据
                 final Metadata metadata = metadataSaveService.save(fileName, filePath, fileSize);
                 // 存储文件
-                final long size = Files.copy(fileData, destinationPath.resolve(metadata.getId()), StandardCopyOption.REPLACE_EXISTING);
+                final long size = Files.copy(fileData, destinationPath.resolve(metadata.getId()),
+                        StandardCopyOption.REPLACE_EXISTING);
                 if (log.isDebugEnabled()) {
-                    log.debug("File size : {}", size);
+                    log.debug("Store file completed, object id: {}, file path: {}, file size: {}", metadata.getId(),
+                            metadata.getPath(), size);
                 }
                 return metadata.getId();
             }
@@ -165,7 +167,7 @@ public class StorageService {
      */
     public Resource loadByMetadata(Metadata metadata) {
         if (log.isDebugEnabled()) {
-            log.debug("Begin to read file: {}", metadata.getId());
+            log.debug("Begin to load file: {}", metadata.getId());
         }
 
         final Path fileFullPath = this.uploadRootPath.resolve(metadata.getPath()).resolve(metadata.getId());
@@ -175,10 +177,10 @@ public class StorageService {
             if (!resource.exists()) {
                 throw new FileNotFoundException(fileFullPath.toString());
             }
-            
+
             if (!resource.isReadable()) {
                 throw new LocalOSSRuntimeException("文件不可读");
-            } 
+            }
 
             return resource;
         } catch (MalformedURLException e) {
