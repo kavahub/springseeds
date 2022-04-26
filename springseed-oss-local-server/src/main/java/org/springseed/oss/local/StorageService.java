@@ -118,8 +118,8 @@ public class StorageService {
      * @param fileId 元数据ID
      * @return
      */
-    public Resource loadByMetadataId(final String metadataId) {
-        return this.metadataQueryService.findById(metadataId)
+    public Resource loadByObjectId(final String objectId) {
+        return this.metadataQueryService.findById(objectId)
                 .map(this::loadByMetadata)
                 .get();
     }
@@ -127,11 +127,11 @@ public class StorageService {
     /**
      * 批量读取文件
      * 
-     * @param metadataIds 元数据ID列表
+     * @param objectIds 元数据ID列表
      * @return
      */
-    public List<Resource> loadByMetadataIds(final List<String> metadataIds) {
-        final List<Metadata> metadatas = this.metadataRepository.findAllById(metadataIds);
+    public List<Resource> loadByObjectIds(final List<String> objectIds) {
+        final List<Metadata> metadatas = this.metadataRepository.findAllById(objectIds);
         return this.loadByMetadatas(metadatas);
     }
 
@@ -192,8 +192,8 @@ public class StorageService {
      * @param id 元数据ID
      */
     @Transactional
-    public void removeByMetadataId(final String metadataId) {
-        this.metadataRepository.findById(metadataId).ifPresentOrElse(metadata -> {
+    public void removeByObjectId(final String objectId) {
+        this.metadataRepository.findById(objectId).ifPresentOrElse(metadata -> {
             if (log.isDebugEnabled()) {
                 log.debug("Begin to remove file: {}", metadata.getName());
             }
@@ -209,7 +209,7 @@ public class StorageService {
                 log.warn("Deleting file exception, file: {} cause: {}", fileFullPath, ex.getMessage());
             }
         }, () -> {
-            log.warn("Metadata not found: {}", metadataId);
+            log.warn("Metadata not found: {}", objectId);
         });
     }
 

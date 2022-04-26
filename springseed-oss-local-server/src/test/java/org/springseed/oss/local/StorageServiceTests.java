@@ -56,8 +56,8 @@ public class StorageServiceTests {
     }
 
     @Test
-    public void givenWrongId_whenLoadByMetadataId_thenMetadataNotFoundException() {
-        assertThrows(MetadataNotFoundException.class, () -> storageService.loadByMetadataId("wrongId"));
+    public void givenWrongId_whenLoadByObjectId_thenMetadataNotFoundException() {
+        assertThrows(MetadataNotFoundException.class, () -> storageService.loadByObjectId("wrongId"));
     }
 
     @Test
@@ -69,8 +69,8 @@ public class StorageServiceTests {
 
     @Test
     public void givenFile_whenStore_thenOK() throws IOException {
-        final String metadataId = this.storeFile();
-        final Metadata metadata = metadataRepository.findById(metadataId).get();
+        final String objectId = this.storeFile();
+        final Metadata metadata = metadataRepository.findById(objectId).get();
 
         final Path filePath = this.getFilePath(metadata);
         assertThat(Files.exists(filePath)).isTrue();
@@ -79,19 +79,19 @@ public class StorageServiceTests {
 
     @Test
     public void givenFile_whenStoreAndLoad_thenOK() {
-        final String metadataId = this.storeFile();
-        final Resource resource = storageService.loadByMetadataId(metadataId);
+        final String objectId = this.storeFile();
+        final Resource resource = storageService.loadByObjectId(objectId);
         assertThat(resource.exists()).isTrue();
     }
 
     @Test
     public void givenFile_whenStoreAndRemove_thenOK() {
-        final String metadataId = this.storeFile();
+        final String objectId = this.storeFile();
 
-        final Metadata metadata = metadataRepository.findById(metadataId).get();
-        storageService.removeByMetadataId(metadataId);
+        final Metadata metadata = metadataRepository.findById(objectId).get();
+        storageService.removeByObjectId(objectId);
         
-        assertThrows(MetadataNotFoundException.class, () -> storageService.loadByMetadataId(metadataId));
+        assertThrows(MetadataNotFoundException.class, () -> storageService.loadByObjectId(objectId));
         assertThat(Files.exists(this.getFilePath(metadata))).isFalse();
     }
 

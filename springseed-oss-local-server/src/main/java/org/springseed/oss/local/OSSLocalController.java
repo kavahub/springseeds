@@ -45,20 +45,27 @@ public class OSSLocalController {
 	@PostMapping("/upload")
 	@ResponseStatus(HttpStatus.CREATED)
 	public String upload(@RequestParam("file") MultipartFile file) {
-		return storageService.store(file);
+		if (log.isDebugEnabled()) {
+			log.debug("Upload file: {}", file.getOriginalFilename());
+		}
+		final String objectId = storageService.store(file);
+		if (log.isDebugEnabled()) {
+			log.debug("File uploaded successfully: {}", file.getOriginalFilename());
+		}
+		return objectId;
 	}
 
-	@GetMapping("/download/{metadataId}")
-	public Resource downloadByMetadataId(@PathVariable String metadataId) {
-		return storageService.loadByMetadataId(metadataId);
+	@GetMapping("/download/{objectId}")
+	public Resource downloadByObjectId(@PathVariable String objectId) {
+		return storageService.loadByObjectId(objectId);
 	}
 
 	@GetMapping(value = "/download/all-in-zip", produces = "application/zip")
-	public void downloadByMetadataIds(@RequestParam(name = "metadataIds") List<String> metadataIds,
+	public void downloadByObjectIds(@RequestParam(name = "objectIds") List<String> objectIds,
 			HttpServletResponse response) throws IOException {
 
 		// 查询元数据
-		final List<Metadata> metadatas = this.metadataRepository.findAllById(metadataIds);				
+		final List<Metadata> metadatas = this.metadataRepository.findAllById(objectIds);				
 		try (ZipOutputStream zipOut = new ZipOutputStream(response.getOutputStream())) {
 			final FileNameCounter fileNameCounter = new FileNameCounter();
 			for (final Metadata metadata : metadatas) {
@@ -82,9 +89,9 @@ public class OSSLocalController {
 		response.setStatus(HttpServletResponse.SC_OK);
 	}
 
-	@DeleteMapping("/{metadataId}")
+	@DeleteMapping("/{objectId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void deleteByMetadataId(@PathVariable String metadataId) {
-		storageService.removeByMetadataId(metadataId);
+	public void deleteByObjectId(@PathVariable String objectId) {
+		storageService.removeByObjectId(objectId);
 	}
 }
