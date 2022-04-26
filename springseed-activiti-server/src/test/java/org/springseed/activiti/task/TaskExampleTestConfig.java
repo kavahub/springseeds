@@ -3,7 +3,6 @@ package org.springseed.activiti.task;
 import org.activiti.api.task.runtime.events.TaskAssignedEvent;
 import org.activiti.api.task.runtime.events.TaskCompletedEvent;
 import org.activiti.api.task.runtime.events.listener.TaskRuntimeEventListener;
-import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author PinWei Wan
  * @since 1.0.0
  */
-@TestConfiguration
+//@TestConfiguration
 @Slf4j
 public class TaskExampleTestConfig {
     @Bean
