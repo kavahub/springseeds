@@ -14,8 +14,8 @@ public class WhenTypeOf<S> {
 		this.object = object;
 	}
 
-	public <T> FirstIs<S, T> is(Class<T> type) {
-		return new FirstIs<>(new Then<>(object), object, type);
+	public <T> FirstIs<S, T> is(Class<T> expectedType) {
+		return new FirstIs<>(new Then<>(object), object, expectedType);
 	}
     
 }
