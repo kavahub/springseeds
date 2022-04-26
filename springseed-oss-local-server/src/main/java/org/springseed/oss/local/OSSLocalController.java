@@ -21,9 +21,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springseed.oss.local.metadata.Metadata;
+import org.springseed.oss.local.metadata.MetadataRepository;
 import org.springseed.oss.local.util.FileNameCounter;
-import org.springseed.oss.metadata.Metadata;
-import org.springseed.oss.metadata.MetadataRepository;
 
 import lombok.extern.slf4j.Slf4j;
 

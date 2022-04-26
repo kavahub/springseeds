@@ -1,4 +1,4 @@
-package org.springseed.oss.metadata;
+package org.springseed.oss.local.metadata;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

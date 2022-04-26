@@ -1,4 +1,4 @@
-package org.springseed.oss.metadata;
+package org.springseed.oss.local.metadata;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -9,7 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springseed.oss.ApplicationTestConfiguration;
+import org.springseed.oss.LocalOSSApplication;
 
 /**
  * 元数据查询服务测试
@@ -18,7 +18,7 @@ import org.springseed.oss.ApplicationTestConfiguration;
  * @since 1.0.0
  */
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = ApplicationTestConfiguration.class)
+@SpringBootTest(classes = LocalOSSApplication.class)
 public class MetadataQueryServiceTests {
     @Autowired
     private MetadataQueryService eetadataQueryService;

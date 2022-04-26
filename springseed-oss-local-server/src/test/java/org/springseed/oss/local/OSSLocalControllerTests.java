@@ -28,7 +28,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springseed.oss.LocalOSSApplication;
 import org.springseed.oss.SpringseedActiveProfiles;
+import org.springseed.oss.local.metadata.MetadataQueryService;
 
 /**
  * 测试
@@ -37,115 +39,142 @@ import org.springseed.oss.SpringseedActiveProfiles;
  * @since 1.0.0
  */
 @ExtendWith(SpringExtension.class)
-@SpringBootTest
+@SpringBootTest(classes = LocalOSSApplication.class)
 @SpringseedActiveProfiles
 @AutoConfigureMockMvc
 public class OSSLocalControllerTests {
-    @Autowired
-    private MockMvc mvc;
+        @Autowired
+        private MetadataQueryService metadataQueryService;
+        @Autowired
+        private MockMvc mvc;
 
-    @Test
-    @WithMockUser(username = "test", roles = { "oss_read", "oss_write", "oss_delete" })
-    public void givenFile_whenUploadAndDownload_thenOK() throws Exception {
-        // upload
-        final MvcResult result1 = mvc.perform(multipart("/v1/files/upload").file(this.createMockMultipartFile()))
-                .andDo(print())
-                .andExpect(status().isCreated())
-                .andReturn();
+        @Test
+        @WithMockUser(username = "test", roles = { "oss_read", "oss_write" })
+        public void givenFile_whenUploadAndDownload_thenContentOK() throws Exception {
+                // upload
+                final MvcResult result1 = mvc
+                                .perform(multipart("/v1/files/upload").file(this.createMockMultipartFile()))
+                                .andDo(print())
+                                .andExpect(status().isCreated())
+                                .andReturn();
 
-        final String metadataId = result1.getResponse().getContentAsString();
+                final String metadataId = result1.getResponse().getContentAsString();
 
-        // load
-        final MvcResult result2 = mvc.perform(get("/v1/files/download/{metadataId}", metadataId))
-                .andDo(print())
-                .andExpect(status().isOk()).andReturn();
+                // load
+                final MvcResult result2 = mvc.perform(get("/v1/files/download/{metadataId}", metadataId))
+                                .andDo(print())
+                                .andExpect(status().isOk()).andReturn();
 
-        final String fileData = new String(result2.getResponse().getContentAsByteArray());
-        assertThat(fileData).isEqualTo("你好");
-    }
+                // 文件内容测试
+                final String fileData = new String(result2.getResponse().getContentAsByteArray());
+                assertThat(fileData).isEqualTo("你好");
 
-    @Test
-    @WithMockUser(username = "test", roles = { "oss_read", "oss_write", "oss_delete" })
-    public void givenFile_whenUploadAndRemove_thenOK() throws Exception {
-        // upload
-        final MvcResult result1 = mvc.perform(multipart("/v1/files/upload").file(this.createMockMultipartFile()))
-                .andDo(print())
-                .andExpect(status().isCreated())
-                .andReturn();
+                // 创建人测试
+                metadataQueryService.findById(metadataId).ifPresent(metadata -> assertThat(metadata.getCreatedBy()).isEqualTo("test"));
+        }
 
-        final String metadataId = result1.getResponse().getContentAsString();
-        // load
-        mvc.perform(get("/v1/files/download/{metadataId}", metadataId))
-                .andDo(print())
-                .andExpect(status().isOk());
+        @Test
+        @WithMockUser(roles = { "oss_read", "oss_write", "oss_delete" })
+        public void givenFile_whenUploadAndRemove_thenOK() throws Exception {
+                // upload
+                final MvcResult result1 = mvc
+                                .perform(multipart("/v1/files/upload").file(this.createMockMultipartFile()))
+                                .andDo(print())
+                                .andExpect(status().isCreated())
+                                .andReturn();
 
-        // remove
-        mvc.perform(delete("/v1/files/{metadataId}", metadataId))
-                .andDo(print())
-                .andExpect(status().isNoContent());
+                final String metadataId = result1.getResponse().getContentAsString();
+                // load
+                mvc.perform(get("/v1/files/download/{metadataId}", metadataId))
+                                .andDo(print())
+                                .andExpect(status().isOk());
 
-        // load
-        mvc.perform(get("/v1/files/download/{metadataId}", metadataId))
-                .andDo(print())
-                .andExpect(status().isNotFound());
-    }
+                // remove
+                mvc.perform(delete("/v1/files/{metadataId}", metadataId))
+                                .andDo(print())
+                                .andExpect(status().isNoContent());
 
-    @Test
-    @WithMockUser(username = "test", roles = { "oss_read", "oss_write", "oss_delete" })
-    public void givenFile_whenAllInZip_thenOK() throws Exception {
-        // upload
-        final MvcResult result1 = mvc.perform(multipart("/v1/files/upload").file(this.createMockMultipartFile()))
-                .andDo(print())
-                .andExpect(status().isCreated())
-                .andReturn();
-        final String metadataId1 = result1.getResponse().getContentAsString();
-        final MvcResult result2 = mvc.perform(multipart("/v1/files/upload").file(this.createMockMultipartFile()))
-                .andDo(print())
-                .andExpect(status().isCreated())
-                .andReturn();
-        final String metadataId2 = result2.getResponse().getContentAsString();
+                // load
+                mvc.perform(get("/v1/files/download/{metadataId}", metadataId))
+                                .andDo(print())
+                                .andExpect(status().isNotFound());
+        }
 
-        // 下载zip
-        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.addAll("metadataIds", Arrays.asList(metadataId1, metadataId2, "wrong_id"));
-        final MvcResult result3 = mvc.perform(get("/v1/files/download/all-in-zip").params(params))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andReturn();
+        @Test
+        @WithMockUser(roles = { "oss_read", "oss_write" })
+        public void givenFile_whenAllInZip_thenOK() throws Exception {
+                // upload
+                final MvcResult result1 = mvc
+                                .perform(multipart("/v1/files/upload").file(this.createMockMultipartFile()))
+                                .andDo(print())
+                                .andExpect(status().isCreated())
+                                .andReturn();
+                final String metadataId1 = result1.getResponse().getContentAsString();
+                final MvcResult result2 = mvc
+                                .perform(multipart("/v1/files/upload").file(this.createMockMultipartFile()))
+                                .andDo(print())
+                                .andExpect(status().isCreated())
+                                .andReturn();
+                final String metadataId2 = result2.getResponse().getContentAsString();
 
-        // 保存到target  
-        final Path zipFile = Paths.get("target", "all-in-zip.zip");     
-        final byte[] zipData = result3.getResponse().getContentAsByteArray();   
-        Files.copy(new ByteArrayInputStream(zipData), zipFile, StandardCopyOption.REPLACE_EXISTING);
-    }
+                // 下载zip
+                MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+                params.addAll("metadataIds", Arrays.asList(metadataId1, metadataId2, "wrong_id"));
+                final MvcResult result3 = mvc.perform(get("/v1/files/download/all-in-zip").params(params))
+                                .andDo(print())
+                                .andExpect(status().isOk())
+                                .andReturn();
 
-    @Test
-    @WithMockUser(username = "test", roles = { "oss_read", "oss_delete" })
-    public void givenWrongRole_whenUpload_thenForbidden() throws Exception {
-        mvc.perform(multipart("/v1/files/upload").file(this.createMockMultipartFile()))
-                .andDo(print())
-                .andExpect(status().isForbidden());
-    }
+                // 保存到target
+                final Path zipFile = Paths.get("target", "all-in-zip.zip");
+                final byte[] zipData = result3.getResponse().getContentAsByteArray();
+                Files.copy(new ByteArrayInputStream(zipData), zipFile, StandardCopyOption.REPLACE_EXISTING);
+        }
 
-    @Test
-    @WithMockUser(username = "test", roles = { "oss_write", "oss_delete" })
-    public void givenWrongRole_whenLoad_thenForbidden() throws Exception {
-        mvc.perform(get("/v1/files/download/id"))
-                .andDo(print())
-                .andExpect(status().isForbidden());
-    }
+        @Test
+        @WithMockUser(username = "test", roles = { "oss_write" })
+        public void givenUploadFile_whenGetCreatedBy_thenOK() throws Exception {
+                // upload
+                final MvcResult result1 = mvc
+                                .perform(multipart("/v1/files/upload").file(this.createMockMultipartFile()))
+                                .andDo(print())
+                                .andExpect(status().isCreated())
+                                .andReturn();
 
-    @Test
-    @WithMockUser(username = "test", roles = { "oss_write", "oss_read" })
-    public void givenWrongRole_whenRemove_thenForbidden() throws Exception {
-        mvc.perform(delete("/v1/files/id"))
-                .andDo(print())
-                .andExpect(status().isForbidden());
-    }
+                final String metadataId = result1.getResponse().getContentAsString();
 
-    private MockMultipartFile createMockMultipartFile() throws IOException {
-        ClassPathResource resource = new ClassPathResource("test-file.txt");
-        return new MockMultipartFile("file", resource.getFilename(), "multipart/form-data",
-                resource.getInputStream());
-    }
+                // 创建人测试
+                metadataQueryService.findById(metadataId).ifPresent(metadata -> assertThat(metadata.getCreatedBy()).isEqualTo("test"));
+        }
+
+
+        @Test
+        @WithMockUser(roles = { "oss_read", "oss_delete" })
+        public void givenWrongRole_whenUpload_thenForbidden() throws Exception {
+                mvc.perform(multipart("/v1/files/upload").file(this.createMockMultipartFile()))
+                                .andDo(print())
+                                .andExpect(status().isForbidden());
+        }
+
+        @Test
+        @WithMockUser(roles = { "oss_write", "oss_delete" })
+        public void givenWrongRole_whenLoad_thenForbidden() throws Exception {
+                mvc.perform(get("/v1/files/download/id"))
+                                .andDo(print())
+                                .andExpect(status().isForbidden());
+        }
+
+        @Test
+        @WithMockUser(roles = { "oss_write", "oss_read" })
+        public void givenWrongRole_whenRemove_thenForbidden() throws Exception {
+                mvc.perform(delete("/v1/files/id"))
+                                .andDo(print())
+                                .andExpect(status().isForbidden());
+        }
+
+        private MockMultipartFile createMockMultipartFile() throws IOException {
+                ClassPathResource resource = new ClassPathResource("test-file.txt");
+                return new MockMultipartFile("file", resource.getFilename(), "multipart/form-data",
+                                resource.getInputStream());
+        }
 }

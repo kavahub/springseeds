@@ -25,7 +25,6 @@
         <module>springseed-activiti-server</module>
         <module>springseed-keycloak-embed-server</module>
         <module>springseed-oauth2-server</module>
-        <module>springseed-oss</module>
         <module>springseed-oss-local-server</module>
         <module>springseed-resource-server</module>
     </modules>

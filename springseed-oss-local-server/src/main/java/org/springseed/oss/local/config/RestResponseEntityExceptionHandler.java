@@ -4,9 +4,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springseed.core.util.ErrorResponse;
+import org.springseed.oss.local.metadata.MetadataNotFoundException;
 import org.springseed.oss.local.util.FileNotFoundException;
-import org.springseed.oss.metadata.MetadataNotFoundException;
-import org.springseed.oss.util.OSSRuntimeException;
+import org.springseed.oss.local.util.LocalOSSRuntimeException;
 
 import cn.hutool.core.exceptions.ExceptionUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +30,7 @@ public class RestResponseEntityExceptionHandler {
         return ResponseEntity.notFound().build();
     }
 
-    @ExceptionHandler({ OSSRuntimeException.class })
+    @ExceptionHandler({ LocalOSSRuntimeException.class })
     public ResponseEntity<ErrorResponse> handleOSSRuntimeException(RuntimeException ex) {
         if (log.isDebugEnabled()) {
             log.debug("{} - {}", ex.getClass().getName(), ex.getMessage());

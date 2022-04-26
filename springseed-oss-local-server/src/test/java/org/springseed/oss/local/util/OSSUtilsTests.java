@@ -1,4 +1,4 @@
-package org.springseed.oss.util;
+package org.springseed.oss.local.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -19,21 +19,24 @@ import cn.hutool.core.util.RandomUtil;
  * @author PinWei Wan
  * @since 1.0.0
  */
-public class OSSUtilTests {
+public class OSSUtilsTests {
 
     @Test
     public void givenFile_whenGetFileType_thenOk() throws IOException {
-        assertThat(OSSUtil.getFileType("test-file.txt")).isEqualTo("txt");
+        assertThat(OSSUtils.getFileType("test-file.txt")).isEqualTo("txt");
 
-        assertThat(OSSUtil.getFileType("test-file")).isNull();
+        assertThat(OSSUtils.getFileType("test-file")).isNull();
     }
 
     @Test
     public void givenFileName_whenGetFilePath_thenOk() {
-        assertThat(OSSUtil.getFilePath("我的文件.txt")).contains("A4", "62");
-        assertThat(OSSUtil.getFilePath("我的文件")).contains("22", "98");
+        assertThat(OSSUtils.getFilePath("我的文件.txt")).contains("A4", "62");
+        assertThat(OSSUtils.getFilePath("我的文件")).contains("22", "98");
     }
 
+    /**
+     * 性能及文件分布情况
+     */
     @Test
     public void givenOneMillionFileName_whenGetFilePath_thenCount() {
         final Random random = new Random();
@@ -42,7 +45,7 @@ public class OSSUtilTests {
         final Map<String, Integer> count = new HashMap<>();
         for(int i = 0; i < OneMillion; i++) {
             final String fileName = RandomUtil.randomString(random.nextInt(100));
-            final String key = String.join(",", OSSUtil.getFilePath(fileName));
+            final String key = String.join(",", OSSUtils.getFilePath(fileName));
             Integer value = count.get(key);
             if (value == null) {
                 value = 0;

@@ -20,14 +20,14 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springseed.oss.LocalOSSApplication;
 import org.springseed.oss.SpringseedActiveProfiles;
 import org.springseed.oss.local.config.OSSProperties;
+import org.springseed.oss.local.metadata.Metadata;
+import org.springseed.oss.local.metadata.MetadataNotFoundException;
+import org.springseed.oss.local.metadata.MetadataRepository;
 import org.springseed.oss.local.util.FileNotFoundException;
-import org.springseed.oss.metadata.Metadata;
-import org.springseed.oss.metadata.MetadataNotFoundException;
-import org.springseed.oss.metadata.MetadataRepository;
 
 /**
  * 测试
- *  
+ * 
  * @author PinWei Wan
  * @since 1.0.0
  */
@@ -62,13 +62,14 @@ public class StorageServiceTests {
 
     @Test
     public void givenWrongId_whenLoadByMetadata_thenFileResourceException() {
-        FileNotFoundException exception = assertThrows(FileNotFoundException.class, () -> storageService.loadByMetadata(md));
+        FileNotFoundException exception = assertThrows(FileNotFoundException.class,
+                () -> storageService.loadByMetadata(md));
         System.out.println(exception.getMessage());
     }
 
     @Test
     public void givenFile_whenStore_thenOK() throws IOException {
-        final String metadataId =  this.storeFile();
+        final String metadataId = this.storeFile();
         final Metadata metadata = metadataRepository.findById(metadataId).get();
 
         final Path filePath = this.getFilePath(metadata);
@@ -78,7 +79,7 @@ public class StorageServiceTests {
 
     @Test
     public void givenFile_whenStoreAndLoad_thenOK() {
-        final String metadataId =  this.storeFile();
+        final String metadataId = this.storeFile();
         final Resource resource = storageService.loadByMetadataId(metadataId);
         assertThat(resource.exists()).isTrue();
     }
@@ -89,6 +90,7 @@ public class StorageServiceTests {
 
         final Metadata metadata = metadataRepository.findById(metadataId).get();
         storageService.removeByMetadataId(metadataId);
+        
         assertThrows(MetadataNotFoundException.class, () -> storageService.loadByMetadataId(metadataId));
         assertThat(Files.exists(this.getFilePath(metadata))).isFalse();
     }
@@ -99,6 +101,6 @@ public class StorageServiceTests {
 
     private String storeFile() {
         return storageService.store(new MockMultipartFile("foo", "foo.txt", MediaType.TEXT_PLAIN_VALUE,
-        "Hello".getBytes()));
+                "Hello".getBytes()));
     }
 }

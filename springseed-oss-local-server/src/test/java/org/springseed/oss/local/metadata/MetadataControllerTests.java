@@ -1,4 +1,4 @@
-package org.springseed.oss.metadata;
+package org.springseed.oss.local.metadata;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
@@ -17,11 +17,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springseed.oss.ApplicationTestConfiguration;
+import org.springseed.oss.LocalOSSApplication;
 
 /**
  * 测试
@@ -30,7 +31,7 @@ import org.springseed.oss.ApplicationTestConfiguration;
  * @since 1.0.0
  */
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = ApplicationTestConfiguration.class)
+@SpringBootTest(classes = LocalOSSApplication.class)
 @AutoConfigureMockMvc
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class MetadataControllerTests {
@@ -50,6 +51,7 @@ public class MetadataControllerTests {
     }
 
     @Test
+    @WithMockUser(username = "test", roles = { "oss_read"})
     public void givenWrongId_whenGet_thenNotFound() throws Exception {
         mvc.perform(get("/v1/metadatas/{id}", "wrong_id"))
                 .andDo(print())
@@ -57,6 +59,7 @@ public class MetadataControllerTests {
     }
 
     @Test
+    @WithMockUser(username = "test", roles = { "oss_read"})
     public void givenIds_whenGetIds_thenOK() throws Exception {
         List<String> ids = Arrays.asList(md1.getId(), md2.getId(), "wrong_id");
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();

@@ -22,16 +22,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springseed.oss.local.config.OSSProperties;
-import org.springseed.oss.local.util.FileEmptyException;
-import org.springseed.oss.local.util.FileNameEmptyException;
+import org.springseed.oss.local.metadata.Metadata;
+import org.springseed.oss.local.metadata.MetadataQueryService;
+import org.springseed.oss.local.metadata.MetadataRepository;
+import org.springseed.oss.local.metadata.MetadataSaveService;
 import org.springseed.oss.local.util.FileNotFoundException;
-import org.springseed.oss.local.util.FileReadException;
-import org.springseed.oss.metadata.Metadata;
-import org.springseed.oss.metadata.MetadataQueryService;
-import org.springseed.oss.metadata.MetadataRepository;
-import org.springseed.oss.util.OSSRuntimeException;
-import org.springseed.oss.util.OSSUtil;
-import org.springseed.oss.util.SecurityUtils;
+import org.springseed.oss.local.util.LocalOSSRuntimeException;
+import org.springseed.oss.local.util.OSSUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -50,6 +47,8 @@ public class StorageService {
     private MetadataRepository metadataRepository;
     @Autowired
     private MetadataQueryService metadataQueryService;
+    @Autowired
+    private MetadataSaveService metadataSaveService;
 
     private Path uploadRootPath;
 
@@ -76,7 +75,7 @@ public class StorageService {
     public String store(MultipartFile file) {
         try {
             if (file.isEmpty()) {
-                throw new FileEmptyException();
+                throw new LocalOSSRuntimeException("不能是空文件");
             }
 
             if (log.isDebugEnabled()) {
@@ -85,14 +84,13 @@ public class StorageService {
 
             final String fileName = StringUtils.cleanPath(file.getOriginalFilename());
             if (!hasText(fileName)) {
-                throw new FileNameEmptyException();
+                throw new LocalOSSRuntimeException("文件名是必须的");
             }
 
             try (InputStream fileData = file.getInputStream()) {
                 
                 final long fileSize = file.getSize();
-                final String fileType = OSSUtil.getFileType(fileName);
-                final String filePath = OSSUtil.getFilePath(fileName);
+                final String filePath = OSSUtils.getFilePath(fileName);
 
                 final Path destinationPath = this.uploadRootPath.resolve(filePath);
                 if (!Files.exists(destinationPath)) {
@@ -100,12 +98,7 @@ public class StorageService {
                 }
 
                 // 存储文件元数据
-                final Metadata metadata = Metadata.builder().path(filePath)
-                        .name(fileName).size(fileSize).type(fileType)
-                        .createdBy(SecurityUtils.getCurrentUserInfo().orElse(null)).build();
-                metadataRepository.save(metadata);
-
-                
+                final Metadata metadata = metadataSaveService.save(fileName, filePath, fileSize);
                 // 存储文件
                 final long size = Files.copy(fileData, destinationPath.resolve(metadata.getId()), StandardCopyOption.REPLACE_EXISTING);
                 if (log.isDebugEnabled()) {
@@ -115,7 +108,7 @@ public class StorageService {
             }
 
         } catch (IOException e) {
-            throw new OSSRuntimeException("Failed to store file", e);
+            throw new LocalOSSRuntimeException("Failed to store file", e);
         }
     }
 
@@ -184,12 +177,12 @@ public class StorageService {
             }
             
             if (!resource.isReadable()) {
-                throw new FileReadException(fileFullPath.toString());
+                throw new LocalOSSRuntimeException("文件不可读");
             } 
 
             return resource;
         } catch (MalformedURLException e) {
-            throw new FileReadException(e);
+            throw new LocalOSSRuntimeException("文件读取失败");
         }
     }
 

@@ -1,4 +1,4 @@
-package org.springseed.oss.metadata;
+package org.springseed.oss.local.metadata;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

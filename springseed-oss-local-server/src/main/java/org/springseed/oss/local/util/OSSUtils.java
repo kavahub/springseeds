@@ -1,4 +1,4 @@
-package org.springseed.oss.util;
+package org.springseed.oss.local.util;
 
 import java.io.File;
 import java.util.Optional;
@@ -12,7 +12,7 @@ import lombok.experimental.UtilityClass;
  * @since 1.0.0
  */
 @UtilityClass
-public class OSSUtil {
+public class OSSUtils {
     private final static int MASK = 255;
 
     public String getFileType(final String fileName) {

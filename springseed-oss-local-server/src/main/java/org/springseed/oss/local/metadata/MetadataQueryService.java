@@ -1,4 +1,4 @@
-package org.springseed.oss.metadata;
+package org.springseed.oss.local.metadata;
 
 import java.util.Optional;
 
