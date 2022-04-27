@@ -17,7 +17,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springseed.oss.LocalOSSApplication;
+import org.springseed.oss.OSSLocalApplication;
 import org.springseed.oss.SpringseedActiveProfiles;
 import org.springseed.oss.local.config.OSSProperties;
 import org.springseed.oss.local.metadata.Metadata;
@@ -32,7 +32,7 @@ import org.springseed.oss.local.util.FileNotFoundException;
  * @since 1.0.0
  */
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = LocalOSSApplication.class)
+@SpringBootTest(classes = OSSLocalApplication.class)
 @SpringseedActiveProfiles
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class StorageServiceTests {
@@ -96,7 +96,7 @@ public class StorageServiceTests {
     }
 
     private Path getFilePath(final Metadata metadata) {
-        return properties.getUploadRootPath().resolve(metadata.getPath()).resolve(metadata.getId());
+        return properties.getUploadRootPath().resolve(metadata.getFullPath()).resolve(metadata.getId());
     }
 
     private String storeFile() {

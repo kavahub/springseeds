@@ -22,7 +22,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springseed.oss.LocalOSSApplication;
+import org.springseed.oss.OSSLocalApplication;
+import org.springseed.oss.SpringseedActiveProfiles;
 
 /**
  * 测试
@@ -31,8 +32,9 @@ import org.springseed.oss.LocalOSSApplication;
  * @since 1.0.0
  */
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = LocalOSSApplication.class)
+@SpringBootTest(classes = OSSLocalApplication.class)
 @AutoConfigureMockMvc
+@SpringseedActiveProfiles
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class MetadataControllerTests {
     @Autowired

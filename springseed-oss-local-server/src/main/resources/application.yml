@@ -12,7 +12,7 @@ spring:
     format-sql: true
     open-in-view: false
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/oss?characterEncoding=UTF-8&useSSL=true
+    url: jdbc:mysql://127.0.0.1:3306/oss_local?characterEncoding=UTF-8&useSSL=true
     username: root
     password: root
   security:

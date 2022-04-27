@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springseed.oss.SpringseedActiveProfiles;
 
 /**
  * 元数据数据接口测试
@@ -17,6 +18,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
  */
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
+@SpringseedActiveProfiles
 public class MetadataRepositoryTests {
     @Autowired
     private TestEntityManager entityManager;

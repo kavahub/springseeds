@@ -1,3 +1,3 @@
 spring:
-  datasource.url: jdbc:h2:mem:oss
+  datasource.url: jdbc:h2:mem:oss_local
   jpa.database-platform: org.hibernate.dialect.H2Dialect

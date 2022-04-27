@@ -10,24 +10,24 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * @since 1.0.0
  */
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-public class LocalOSSRuntimeException extends RuntimeException {
+public class OSSLocalRuntimeException extends RuntimeException {
 
-    public LocalOSSRuntimeException() {
+    public OSSLocalRuntimeException() {
     }
 
-    public LocalOSSRuntimeException(String message) {
+    public OSSLocalRuntimeException(String message) {
         super(message);
     }
 
-    public LocalOSSRuntimeException(Throwable cause) {
+    public OSSLocalRuntimeException(Throwable cause) {
         super(cause);
     }
 
-    public LocalOSSRuntimeException(String message, Throwable cause) {
+    public OSSLocalRuntimeException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public LocalOSSRuntimeException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public OSSLocalRuntimeException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
     

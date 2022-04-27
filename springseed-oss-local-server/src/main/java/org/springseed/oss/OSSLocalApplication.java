@@ -10,8 +10,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @since 1.0.0
  */
 @SpringBootApplication
-public class LocalOSSApplication {
+public class OSSLocalApplication {
     public static void main(String[] args) throws Exception {
-        SpringApplication.run(LocalOSSApplication.class, args);
+        SpringApplication.run(OSSLocalApplication.class, args);
     }
 }

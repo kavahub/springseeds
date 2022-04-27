@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * @since 1.0.0
  */
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
-public class FileNotFoundException extends LocalOSSRuntimeException {
+public class FileNotFoundException extends OSSLocalRuntimeException {
 
     public FileNotFoundException(String message) {
         super(message);

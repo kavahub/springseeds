@@ -21,14 +21,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+import org.springseed.core.util.PathUtils;
 import org.springseed.oss.local.config.OSSProperties;
 import org.springseed.oss.local.metadata.Metadata;
 import org.springseed.oss.local.metadata.MetadataQueryService;
 import org.springseed.oss.local.metadata.MetadataRepository;
 import org.springseed.oss.local.metadata.MetadataSaveService;
 import org.springseed.oss.local.util.FileNotFoundException;
-import org.springseed.oss.local.util.LocalOSSRuntimeException;
-import org.springseed.oss.local.util.OSSUtils;
+import org.springseed.oss.local.util.OSSLocalRuntimeException;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -75,7 +75,7 @@ public class StorageService {
     public String store(MultipartFile file) {
         try {
             if (file.isEmpty()) {
-                throw new LocalOSSRuntimeException("不能是空文件");
+                throw new OSSLocalRuntimeException("不能是空文件");
             }
 
             if (log.isDebugEnabled()) {
@@ -84,33 +84,33 @@ public class StorageService {
 
             final String fileName = StringUtils.cleanPath(file.getOriginalFilename());
             if (!hasText(fileName)) {
-                throw new LocalOSSRuntimeException("文件名是必须的");
+                throw new OSSLocalRuntimeException("文件名是必须的");
             }
 
             try (InputStream fileData = file.getInputStream()) {
 
                 final long fileSize = file.getSize();
-                final String filePath = OSSUtils.getFilePath(fileName);
+                final String[] filePath = PathUtils.generalHashPath(fileName);
 
-                final Path destinationPath = this.uploadRootPath.resolve(filePath);
+                final Path destinationPath = this.uploadRootPath.resolve(filePath[0]).resolve(filePath[1]);
                 if (!Files.exists(destinationPath)) {
                     Files.createDirectories(destinationPath);
                 }
 
                 // 存储文件元数据
-                final Metadata metadata = metadataSaveService.save(fileName, filePath, fileSize);
+                final Metadata metadata = metadataSaveService.save(fileName, Metadata.joinPath(filePath), fileSize);
                 // 存储文件
                 final long size = Files.copy(fileData, destinationPath.resolve(metadata.getId()),
                         StandardCopyOption.REPLACE_EXISTING);
                 if (log.isDebugEnabled()) {
                     log.debug("Store file completed, object id: {}, file path: {}, file size: {}", metadata.getId(),
-                            metadata.getPath(), size);
+                            metadata.getFullPath(), size);
                 }
                 return metadata.getId();
             }
 
         } catch (IOException e) {
-            throw new LocalOSSRuntimeException("Failed to store file", e);
+            throw new OSSLocalRuntimeException("Failed to store file", e);
         }
     }
 
@@ -170,7 +170,7 @@ public class StorageService {
             log.debug("Begin to load file: {}", metadata.getId());
         }
 
-        final Path fileFullPath = this.uploadRootPath.resolve(metadata.getPath()).resolve(metadata.getId());
+        final Path fileFullPath = this.uploadRootPath.resolve(metadata.getFullPath()).resolve(metadata.getId());
         try {
             final Resource resource = new UrlResource(fileFullPath.toUri());
 
@@ -179,12 +179,12 @@ public class StorageService {
             }
 
             if (!resource.isReadable()) {
-                throw new LocalOSSRuntimeException("文件不可读");
+                throw new OSSLocalRuntimeException("文件不可读");
             }
 
             return resource;
         } catch (MalformedURLException e) {
-            throw new LocalOSSRuntimeException("文件读取失败");
+            throw new OSSLocalRuntimeException("文件读取失败");
         }
     }
 
@@ -200,7 +200,7 @@ public class StorageService {
                 log.debug("Begin to remove file: {}", metadata.getName());
             }
 
-            final Path fileFullPath = this.uploadRootPath.resolve(metadata.getPath()).resolve(metadata.getId());
+            final Path fileFullPath = this.uploadRootPath.resolve(metadata.getFullPath()).resolve(metadata.getId());
 
             // 先删除数据库
             this.metadataRepository.delete(metadata);

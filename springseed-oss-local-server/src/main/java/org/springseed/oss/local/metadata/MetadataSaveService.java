@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-import org.springseed.oss.local.util.LocalOSSRuntimeException;
-import org.springseed.oss.local.util.OSSUtils;
+import org.springseed.core.util.FileUtils;
+import org.springseed.oss.local.util.OSSLocalRuntimeException;
 import org.springseed.oss.local.util.SecurityUtils;
 
 
@@ -32,7 +32,7 @@ public class MetadataSaveService {
         }
 
         final Metadata metadata = Metadata.builder().path(path)
-                .name(tmpName).size(size).type(OSSUtils.getFileType(tmpName))
+                .name(tmpName).size(size).type(FileUtils.getFileExtension(tmpName))
                 .createdBy(SecurityUtils.getCurrentUserInfo()).build();
         return metadataRepository.save(metadata);
     }
@@ -46,11 +46,11 @@ public class MetadataSaveService {
         final Metadata metadata = this.metadataQueryService.findById(id).get();
         final String createdBy = metadata.getCreatedBy();
         if (StringUtils.hasText(createdBy) && !metadata.getCreatedBy().equals(SecurityUtils.getCurrentUserInfo())) {
-            throw new LocalOSSRuntimeException("创建人才能修改");
+            throw new OSSLocalRuntimeException("创建人才能修改");
         }
         ;
         metadata.setName(tmpName);
-        metadata.setType(OSSUtils.getFileType(tmpName));
+        metadata.setType(FileUtils.getFileExtension(tmpName));
         metadataRepository.save(metadata);
     }
 }

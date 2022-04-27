@@ -9,7 +9,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springseed.oss.LocalOSSApplication;
+import org.springseed.oss.OSSLocalApplication;
+import org.springseed.oss.SpringseedActiveProfiles;
 
 /**
  * 元数据查询服务测试
@@ -18,7 +19,8 @@ import org.springseed.oss.LocalOSSApplication;
  * @since 1.0.0
  */
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = LocalOSSApplication.class)
+@SpringBootTest(classes = OSSLocalApplication.class)
+@SpringseedActiveProfiles
 public class MetadataQueryServiceTests {
     @Autowired
     private MetadataQueryService eetadataQueryService;

@@ -28,7 +28,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springseed.oss.LocalOSSApplication;
+import org.springseed.oss.OSSLocalApplication;
 import org.springseed.oss.SpringseedActiveProfiles;
 import org.springseed.oss.local.metadata.MetadataQueryService;
 
@@ -39,7 +39,7 @@ import org.springseed.oss.local.metadata.MetadataQueryService;
  * @since 1.0.0
  */
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = LocalOSSApplication.class)
+@SpringBootTest(classes = OSSLocalApplication.class)
 @SpringseedActiveProfiles
 @AutoConfigureMockMvc
 public class OSSLocalControllerTests {
@@ -119,7 +119,7 @@ public class OSSLocalControllerTests {
 
                 // 下载zip
                 MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-                params.addAll("metadataIds", Arrays.asList(metadataId1, metadataId2, "wrong_id"));
+                params.addAll("objectIds", Arrays.asList(metadataId1, metadataId2, "wrong_id"));
                 final MvcResult result3 = mvc.perform(get("/v1/files/download/all-in-zip").params(params))
                                 .andDo(print())
                                 .andExpect(status().isOk())

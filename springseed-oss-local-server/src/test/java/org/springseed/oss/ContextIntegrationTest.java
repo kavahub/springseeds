@@ -12,7 +12,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
  * @since 1.0.0
  */
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = { LocalOSSApplication.class })
+@SpringBootTest(classes = { OSSLocalApplication.class })
 @SpringseedActiveProfiles
 public class ContextIntegrationTest {
     @Test
