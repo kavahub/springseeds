@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @SpringseedActiveProfiles
 @Import(IntegrationExampleTestConfig.class)
 @Slf4j
-public class IntegrationExampleTests {
+public class IntegrationExampleManualTests {
 
     @Test
     public void test() throws InterruptedException, IOException {

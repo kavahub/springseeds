@@ -31,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 @SpringseedActiveProfiles
 @Import(CategorizeContentProcessTestConfig.class)
 @Slf4j
-public class CategorizeContentProcessTests {
+public class CategorizeContentProcessManualTests {
     private static final String PROCESS_DEFINITION_KEY = "categorizeProcess";
 
     @Autowired

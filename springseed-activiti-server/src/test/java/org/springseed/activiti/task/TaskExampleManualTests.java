@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 @SpringseedActiveProfiles
 //@Import(TaskExampleTestConfig.class)
 @Slf4j
-public class TaskExampleTests {
+public class TaskExampleManualTests {
     @Autowired
     private TaskRuntime taskRuntime;
 

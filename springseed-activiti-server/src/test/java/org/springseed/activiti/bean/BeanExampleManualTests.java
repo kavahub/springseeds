@@ -37,7 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 @SpringseedActiveProfiles
 @Import(BeanExampleTestConfig.class)
 @Slf4j
-public class BeanExampleTests {
+public class BeanExampleManualTests {
     @Autowired
     private ProcessRuntime processRuntime;
     @Autowired

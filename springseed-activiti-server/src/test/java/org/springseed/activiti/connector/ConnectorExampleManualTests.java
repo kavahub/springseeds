@@ -37,7 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 @SpringseedActiveProfiles
 @Import(ConnectorExampleTestConfig.class)
 @Slf4j
-public class ConnectorExampleTests {
+public class ConnectorExampleManualTests {
     @Autowired
     private ProcessRuntime processRuntime;
     @Autowired
