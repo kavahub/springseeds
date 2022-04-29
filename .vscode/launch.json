@@ -6,6 +6,15 @@
     "configurations": [
         {
             "type": "java",
+            "name": "OSSMinioApplication",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "org.springseed.oss.OSSMinioApplication",
+            "projectName": "springseed-oss-minio-server"
+        },
+        {
+            "type": "java",
             "name": "ActivitiApplication",
             "request": "launch",
             "cwd": "${workspaceFolder}",
@@ -15,11 +24,11 @@
         },
         {
             "type": "java",
-            "name": "LocalOSSApplication",
+            "name": "OSSLocalApplication",
             "request": "launch",
             "cwd": "${workspaceFolder}",
             "console": "internalConsole",
-            "mainClass": "org.springseed.oss.LocalOSSApplication",
+            "mainClass": "org.springseed.oss.OSSLocalApplication",
             "projectName": "springseed-oss-local-server"
         },
         {
