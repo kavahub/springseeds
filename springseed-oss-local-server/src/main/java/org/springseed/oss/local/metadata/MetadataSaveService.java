@@ -10,7 +10,7 @@ import org.springseed.oss.local.util.SecurityUtils;
 
 
 /**
- * TODO
+ * 元数据保持
  * 
  * @author PinWei Wan
  * @since 1.0.0
