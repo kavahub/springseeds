@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springseed.core.util.SnowflakeUtil;
 
 /**
- * TODO
+ * 通用请求
  * 
  * @author PinWei Wan
  * @since 1.0.0

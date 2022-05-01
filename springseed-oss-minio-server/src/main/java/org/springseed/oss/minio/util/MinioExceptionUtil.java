@@ -7,7 +7,7 @@ import io.minio.errors.MinioException;
 import lombok.experimental.UtilityClass;
 
 /**
- * TODO
+ * 异常工具
  *  
  * @author PinWei Wan
  * @since 1.0.0

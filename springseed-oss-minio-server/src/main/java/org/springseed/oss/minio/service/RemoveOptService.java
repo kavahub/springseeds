@@ -13,7 +13,7 @@ import io.minio.RemoveObjectArgs;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * TODO
+ * remove操作
  * 
  * @author PinWei Wan
  * @since 1.0.0

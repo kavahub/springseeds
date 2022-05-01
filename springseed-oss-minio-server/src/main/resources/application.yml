@@ -4,10 +4,10 @@ server:
 
 springseed.oss.minio:
   server:
-    endpoint: localhost
+    endpoint: 127.0.0.1
     port: 8001
-    accessKey: a
-    secretKey: a
+    accessKey: admin
+    secretKey: 12345678
 
 spring:
   application:

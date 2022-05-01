@@ -11,7 +11,7 @@ import org.springseed.oss.minio.service.RemoveOptService;
 import org.springseed.oss.minio.service.StatOptService;
 
 /**
- * TODO
+ * Remove接口
  * 
  * @author PinWei Wan
  * @since 1.0.0

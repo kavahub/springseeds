@@ -4,7 +4,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.WebRequest;
 import org.springseed.core.util.ErrorResponse;
 import org.springseed.oss.minio.util.OSSMinioException;
 import org.springseed.oss.minio.util.OSSMinioNotFoundException;
@@ -45,7 +44,7 @@ public class RestResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler({ Exception.class })
-    public ResponseEntity<Object> handleInternal(final RuntimeException ex, final WebRequest request) {
+    public ResponseEntity<ErrorResponse> handleInternal(final Exception ex) {
         log.error("服务异常", ex);
         final ErrorResponse bodyOfResponse = new ErrorResponse(ex.getMessage(), Exception.class.getName(), ExceptionUtil.stacktraceToString(ex));
          return ResponseEntity.internalServerError().body(bodyOfResponse);

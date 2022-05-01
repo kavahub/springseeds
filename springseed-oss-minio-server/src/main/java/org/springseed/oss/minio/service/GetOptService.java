@@ -17,7 +17,7 @@ import io.minio.http.Method;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * TODO
+ * get操作
  * 
  * @author PinWei Wan
  * @since 1.0.0

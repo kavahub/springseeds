@@ -1,15 +1,11 @@
 package org.springseed.oss.minio.util;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
-
 /**
- * TODO
+ * 异常
  *  
  * @author PinWei Wan
  * @since 1.0.0
  */
-@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
 public class OSSMinioInternalException extends RuntimeException {
 
     public OSSMinioInternalException() {

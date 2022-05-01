@@ -5,7 +5,7 @@ import java.util.function.Consumer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springseed.oss.minio.bean.UserMetadata;
+import org.springseed.oss.minio.bean.MinioUserMetadata;
 import org.springseed.oss.minio.util.MinioArgsUtils;
 import org.springseed.oss.minio.util.MinioExceptionUtil;
 import org.springseed.oss.minio.util.MinioUtils;
@@ -15,7 +15,7 @@ import io.minio.PutObjectArgs;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * TODO
+ * put操作
  * 
  * @author PinWei Wan
  * @since 1.0.0
@@ -35,7 +35,7 @@ public class PutOptService {
      * @param contentType
      * @param consumer
      */
-    public void put(final UserMetadata metadata, final InputStream file, final Consumer<PutObjectArgs.Builder> consumer) {
+    public void put(final MinioUserMetadata metadata, final InputStream file, final Consumer<PutObjectArgs.Builder> consumer) {
         final String minioId = MinioUtils.minioId(metadata.getObjectId());
         metadata.minioId(minioId);
 
@@ -60,8 +60,8 @@ public class PutOptService {
         }
     }
 
-    public void put(final UserMetadata metadata, final InputStream file) {
-        this.put(metadata, file);
+    public void put(final MinioUserMetadata metadata, final InputStream file) {
+        this.put(metadata, file, null);
     }
 
 }

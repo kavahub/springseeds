@@ -9,7 +9,7 @@ import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springseed.oss.minio.bean.UserMetadata;
+import org.springseed.oss.minio.bean.MinioUserMetadata;
 import org.springseed.oss.minio.util.MinioArgsUtils;
 import org.springseed.oss.minio.util.MinioExceptionUtil;
 import org.springseed.oss.minio.util.MinioUtils;
@@ -21,7 +21,7 @@ import io.minio.StatObjectResponse;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * TODO
+ * stat操作
  * 
  * @author PinWei Wan
  * @since 1.0.0
@@ -43,18 +43,18 @@ public class StatOptService {
         return found;
     }
 
-    public UserMetadata getUserMetadata(final String bucket, final String objectId,
+    public MinioUserMetadata getUserMetadata(final String bucket, final String objectId,
             final Consumer<StatObjectArgs.Builder> consumer) {
         final StatObjectResponse statObjectResponse = this.getStatObjectResponse(bucket, objectId, consumer);
-        return UserMetadata.of(statObjectResponse.userMetadata());
+        return MinioUserMetadata.of(statObjectResponse.userMetadata());
     }
 
-    public UserMetadata getUserMetadata(final String bucket, final String objectId) {
+    public MinioUserMetadata getUserMetadata(final String bucket, final String objectId) {
         final StatObjectResponse statObjectResponse = this.getStatObjectResponse(bucket, objectId);
-        return UserMetadata.of(statObjectResponse.userMetadata());
+        return MinioUserMetadata.of(statObjectResponse.userMetadata());
     }
 
-    public List<UserMetadata> getUserMetadata(final String bucket, final Iterable<String> objectIds) {
+    public List<MinioUserMetadata> getUserMetadata(final String bucket, final Iterable<String> objectIds) {
         return StreamSupport.stream(objectIds.spliterator(), false)
                 .map(objectId -> getUserMetadata(bucket, objectId))
                 .collect(Collectors.toList());

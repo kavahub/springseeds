@@ -17,6 +17,7 @@
 
     <properties>
         <minio.version>8.3.9</minio.version>
+        <!-- okhttp的版本有冲突-->
         <okhttp.version>4.8.1</okhttp.version>
     </properties>
 

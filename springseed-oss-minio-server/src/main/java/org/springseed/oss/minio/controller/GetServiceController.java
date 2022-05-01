@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springseed.oss.minio.bean.UserMetadata;
+import org.springseed.oss.minio.bean.MinioUserMetadata;
 import org.springseed.oss.minio.service.GetOptService;
 import org.springseed.oss.minio.service.StatOptService;
 import org.springseed.oss.minio.util.FileNameCounter;
@@ -27,7 +27,7 @@ import org.springseed.oss.minio.util.OSSMinioInternalException;
 import io.minio.http.Method;
 
 /**
- * TODO
+ * get接口
  * 
  * @author PinWei Wan
  * @since 1.0.0
@@ -46,7 +46,7 @@ public class GetServiceController {
             final HttpServletResponse response) {
 
         // 元数据
-        final UserMetadata userMetadata = statOptService.getUserMetadata(bucket, objectId);
+        final MinioUserMetadata userMetadata = statOptService.getUserMetadata(bucket, objectId);
         // 文件数据
         final InputStream inputStream = getOptService.getObject(bucket, objectId);
 
@@ -68,11 +68,11 @@ public class GetServiceController {
             final HttpServletResponse response) {
         final FileNameCounter fileNameCounter = new FileNameCounter();
         // 元数据
-        final List<UserMetadata> userMetadatas = statOptService.getUserMetadata(bucket, objectIds);
+        final List<MinioUserMetadata> userMetadatas = statOptService.getUserMetadata(bucket, objectIds);
 
         try (ZipOutputStream zipOut = new ZipOutputStream(response.getOutputStream())) {
 
-            for (final UserMetadata userMetadata : userMetadatas) {
+            for (final MinioUserMetadata userMetadata : userMetadatas) {
                 // 读取文件
                 final InputStream fileData = getOptService.getObject(bucket, userMetadata.getObjectId());
                 // 避免重复的文件名

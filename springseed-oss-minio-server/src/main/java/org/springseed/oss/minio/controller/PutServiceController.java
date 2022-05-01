@@ -6,6 +6,8 @@ import java.time.ZonedDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.MediaTypeFactory;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,14 +17,14 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springseed.core.util.SnowflakeUtil;
-import org.springseed.oss.minio.bean.UserMetadata;
+import org.springseed.oss.minio.bean.MinioUserMetadata;
 import org.springseed.oss.minio.service.PutOptService;
 import org.springseed.oss.minio.util.OSSMinioException;
 import org.springseed.oss.minio.util.OSSMinioInternalException;
 import org.springseed.oss.minio.util.SecurityUtils;
 
 /**
- * TODO
+ * put接口
  * 
  * @author PinWei Wan
  * @since 1.0.0
@@ -47,11 +49,13 @@ public class PutServiceController {
             throw new OSSMinioException("文件名是必须的");
         }
 
+        final String contentType = MediaTypeFactory.getMediaType(fileName).map(MediaType::toString).orElse(null);
+
         final String objectId = reqObjectId == null ? SnowflakeUtil.INSTANCE.nextIdStr() : reqObjectId;
-        final UserMetadata umd = UserMetadata.of()
+        final MinioUserMetadata umd = MinioUserMetadata.of()
                 .objectId(objectId)
                 .bucket(bucket)
-                .conentType(file.getContentType())
+                .conentType(contentType)
                 .fileName(fileName)
                 .fileSize(file.getSize())
                 .createdBy(SecurityUtils.getCurrentUserInfo())

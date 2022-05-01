@@ -6,7 +6,7 @@ import org.springseed.core.util.PathUtils;
 import lombok.experimental.UtilityClass;
 
 /**
- * TODO
+ * 工具
  * 
  * @author PinWei Wan
  * @since 1.0.0

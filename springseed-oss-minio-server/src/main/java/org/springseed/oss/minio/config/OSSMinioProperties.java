@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import lombok.Data;
 
 /**
- * TODO
+ * 属性对象
  * 
  * @author PinWei Wan
  * @since 1.0.0
